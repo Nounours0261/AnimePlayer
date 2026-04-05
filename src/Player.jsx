@@ -1,8 +1,9 @@
 import "./Player.css";
 import {useEffect, useRef} from "react";
 import VideoControls from "./buttons/VideoControls.jsx";
+import HomePage from "./HomePage.jsx";
 
-function Player() {
+function Player({videoLink}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
@@ -39,7 +40,7 @@ function Player() {
                  ref={videoHolderRef}
             >
                 <video
-                    src={"/anime/Oshi_no_Ko_08.mp4"}
+                    src={`/anime/${videoLink}`}
                     autoPlay={false}
                     muted
                     ref={videoRef}
