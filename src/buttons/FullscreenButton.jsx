@@ -32,7 +32,7 @@ function FullscreenButton({playerRef}) {
         return () => {
             window.removeEventListener("fullscreenchange", escapeHandler);
             window.removeEventListener("keydown", keyHandler);
-        }
+        };
     }, [isFull, setIsFull, swapFullscreen]);
 
     return <button id={"fullscreen"}

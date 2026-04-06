@@ -1,13 +1,12 @@
 import "./Player.css";
 import {useEffect, useRef} from "react";
 import VideoControls from "./buttons/VideoControls.jsx";
-import HomePage from "./HomePage.jsx";
 
 function Player({videoLink}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
-    const hideMouseTimeout=useRef(0);
+    const hideMouseTimeout = useRef(0);
 
     useEffect(() => {
         function moveHandler() {
@@ -29,8 +28,21 @@ function Player({videoLink}) {
 
         return () => {
             window.removeEventListener("mousemove", moveHandler);
+            if (hideMouseTimeout.current !== 0) {
+                clearTimeout(hideMouseTimeout.current);
+            }
         };
     }, []);
+
+    useEffect(() => {
+        if (videoLink !== "") {
+            videoRef.current.play().catch((reason) => {
+                if (reason.name !== "NotAllowedError") {
+                    console.error(reason);
+                }
+            });
+        }
+    }, [videoLink]);
 
     return (
         <figure id={"player"}
@@ -40,17 +52,17 @@ function Player({videoLink}) {
                  ref={videoHolderRef}
             >
                 <video
-                    src={`/anime/${videoLink}`}
-                    autoPlay={false}
-                    muted
+                    src={videoLink}
                     ref={videoRef}
+                    disableRemotePlayback
                 >
                 </video>
 
                 <div id={"subtitle-hider"}></div>
             </div>
 
-           <VideoControls videoRef={videoRef} playerRef={playerRef}/>
+            <VideoControls videoRef={videoRef}
+                           playerRef={playerRef}/>
         </figure>);
 }
 

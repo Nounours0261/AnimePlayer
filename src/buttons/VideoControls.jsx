@@ -26,6 +26,9 @@ function VideoControls({videoRef, playerRef}) {
 
         return () => {
             window.removeEventListener("mousemove", moveHandler);
+            if (hideTimeout.current !== 0) {
+                clearTimeout(hideTimeout.current);
+            }
         };
     }, []);
 

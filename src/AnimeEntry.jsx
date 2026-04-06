@@ -1,30 +1,30 @@
 import {useEffect, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
+import {getAnimeInfo} from "./utils/jsonReader.js";
 
 function AnimeEntry({path}) {
 
     const [info, setInfo] = useState({
         title: "",
-        episodes: []
+        episodes: [],
     });
 
 
     useEffect(() => {
-        async function getInfo() {
-            const index = await fetch(`/anime/${path}/info.json`);
-            return await index.json();
-        }
-
         let ignore = false;
-        getInfo().then((res) => {
+        getAnimeInfo(path).then((res) => {
             if (!ignore) {
-                setInfo(res);
+                if (res.ok) {
+                    setInfo(res);
+                } else {
+                    window.alert(`Failed to get info on '${path}', check console for more info`);
+                }
             }
         });
         return () => {
             ignore = true;
-        }
+        };
     }, [path]);
 
     return (

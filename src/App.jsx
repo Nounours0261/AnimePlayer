@@ -1,5 +1,4 @@
-import './App.css'
-import Player from "./Player.jsx";
+import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import HomePage from "./HomePage.jsx";
 import WatchPage from "./WatchPage.jsx";
@@ -16,7 +15,7 @@ function App() {
 
                     <Route path={"/watch/:anime/:episode"}
                            element={
-                              <WatchPage/>
+                               <WatchPage/>
                            }
                     />
 
@@ -30,7 +29,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

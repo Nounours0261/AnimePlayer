@@ -1,25 +1,24 @@
 import {useEffect, useState} from "react";
 import AnimeEntry from "./AnimeEntry.jsx";
+import {getIndex} from "./utils/jsonReader.js";
 
 function HomePage() {
-    async function listAnime() {
-        const index = await fetch("/anime/index.json");
-        const asJson = await index.json();
-        return asJson.list;
-    }
-
     const [animeList, setAnimeList] = useState([]);
 
     useEffect(() => {
         let ignore = false;
-        listAnime().then((list) => {
+        getIndex().then((index) => {
             if (!ignore) {
-                setAnimeList(list);
+                if (index.ok) {
+                    setAnimeList(index.list);
+                } else {
+                    window.alert("Failed to get index contents, check console for more info");
+                }
             }
         });
         return () => {
             ignore = true;
-        }
+        };
     }, []);
 
     return (<div>

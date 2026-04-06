@@ -1,19 +1,55 @@
 import Player from "./Player.jsx";
-import {NavLink, useParams} from "react-router";
-import {useState} from "react";
+import {NavLink, useNavigate, useParams} from "react-router";
+import {useEffect, useState} from "react";
+import EpisodeList from "./EpisodeList.jsx";
+import {getAnimeInfo} from "./utils/jsonReader.js";
+import {asList, asString} from "./utils/default.js";
 
 function WatchPage() {
-
-    const [link, setLink] = useState("Oshi_no_Ko/Oshi_no_Ko_08.mp4")
+    const [animeInfo, setAnimeInfo] = useState({});
+    const [link, setLink] = useState(null);
 
     const {anime, episode} = useParams();
+    const navigate = useNavigate();
+
+    function changeEpisode(number) {
+        navigate(`/watch/${anime}/${number}`);
+        setLink(`/anime/${anime}/${asString(asList(animeInfo.episodes)[number - 1])}`);
+    }
+
+    useEffect(() => {
+        let ignore = false;
+        getAnimeInfo(anime).then((info) => {
+            if (!ignore) {
+                if (info.ok) {
+                    setAnimeInfo(info);
+                    setLink(`/anime/${anime}/${asString(asList(info.episodes)[episode - 1])}`);
+                } else {
+                    window.alert(`Failed to get info about '${anime}', check console for more info`);
+                }
+            }
+        });
+        return () => {
+            ignore = true;
+        };
+    }, []);
 
     return (<div id={"container"}>
-        <Player videoLink={link}/>
+        <EpisodeList count={asList(animeInfo.episodes).length}
+                     selected={parseInt(episode)}
+                     select={changeEpisode}
+        />
+
+        <Player videoLink={link}
+        />
+
         <div>
             {anime}, {episode}
         </div>
-        <button onClick={() => {setLink("Oshi_no_Ko/Oshi_no_Ko_09.mp4")}}>Change</button>
+        <button onClick={() => {
+            getAnimeInfo("bheee");
+        }}>Change
+        </button>
         <NavLink to={"/home"}
         >
             Home
