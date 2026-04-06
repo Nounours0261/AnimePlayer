@@ -3,7 +3,6 @@ import {NavLink, useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";
 import {getAnimeInfo} from "./utils/jsonReader.js";
-import {asList, asString} from "./utils/default.js";
 
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});
@@ -14,7 +13,7 @@ function WatchPage() {
 
     function changeEpisode(number) {
         navigate(`/watch/${anime}/${number}`);
-        setLink(`/anime/${anime}/${asString(asList(animeInfo.episodes)[number - 1])}`);
+        setLink(`/anime/${anime}/${((animeInfo.episodes ?? [])[number - 1] ?? "")}`);
     }
 
     useEffect(() => {
@@ -23,7 +22,7 @@ function WatchPage() {
             if (!ignore) {
                 if (info.ok) {
                     setAnimeInfo(info);
-                    setLink(`/anime/${anime}/${asString(asList(info.episodes)[episode - 1])}`);
+                    setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
                 } else {
                     window.alert(`Failed to get info about '${anime}', check console for more info`);
                 }
@@ -35,7 +34,7 @@ function WatchPage() {
     }, []);
 
     return (<div id={"container"}>
-        <EpisodeList count={asList(animeInfo.episodes).length}
+        <EpisodeList count={(animeInfo.episodes ?? []).length}
                      selected={parseInt(episode)}
                      select={changeEpisode}
         />
