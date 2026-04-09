@@ -17,12 +17,14 @@
         }
 
         #subtitle-hider {
-            width: 200px;
-            height: 50px;
+            --width: 40%;
+            width: var(--width);
+            height: 12%;
 
             position: absolute;
-            bottom: 0;
-            background-color: aqua;
+            bottom: 6%;
+            left : calc((100% - var(--width)) / 2);
+            background-color: cyan;
         }
     }
 

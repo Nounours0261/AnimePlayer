@@ -1,6 +1,8 @@
 import PlayPauseButton from "./PlayPauseButton.jsx";
 import FullscreenButton from "./FullscreenButton.jsx";
 import {useEffect, useRef} from "react";
+import ProgressBar from "./ProgressBar.jsx";
+import "./VideoControls.css";
 
 function VideoControls({videoRef, playerRef}) {
     const controlsRef = useRef(null);
@@ -37,12 +39,10 @@ function VideoControls({videoRef, playerRef}) {
     >
         <PlayPauseButton videoRef={videoRef}/>
 
-        <progress id={"progress"}
-                  value={50}
-        >
+        <ProgressBar videoRef={videoRef}
+            >
 
-        </progress>
-
+        </ProgressBar>
         <progress id={"volume"}
                   value={50}
         >

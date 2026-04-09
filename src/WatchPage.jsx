@@ -1,6 +1,6 @@
 import Player from "./Player.jsx";
 import {NavLink, useNavigate, useParams} from "react-router";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";
 import {getAnimeInfo} from "./utils/jsonReader.js";
 
@@ -11,10 +11,10 @@ function WatchPage() {
     const {anime, episode} = useParams();
     const navigate = useNavigate();
 
-    function changeEpisode(number) {
+    const changeEpisode = useCallback((number) => {
         navigate(`/watch/${anime}/${number}`);
         setLink(`/anime/${anime}/${((animeInfo.episodes ?? [])[number - 1] ?? "")}`);
-    }
+    }, [anime, animeInfo.episodes, navigate]);
 
     useEffect(() => {
         let ignore = false;
@@ -33,6 +33,23 @@ function WatchPage() {
         };
     }, []);
 
+    useEffect(() => {
+        function keyHandler(e) {
+            if (e.key === "d") {
+                changeEpisode(parseInt(episode) - 1);
+            }
+            if (e.key === "g") {
+                changeEpisode(parseInt(episode) + 1);
+            }
+        }
+
+        window.addEventListener("keydown", keyHandler);
+
+        return () => {
+            window.removeEventListener("keydown", keyHandler);
+        };
+    }, [anime, animeInfo, changeEpisode, episode, navigate]);
+
     return (<div id={"container"}>
         <EpisodeList count={(animeInfo.episodes ?? []).length}
                      selected={parseInt(episode)}
@@ -45,10 +62,6 @@ function WatchPage() {
         <div>
             {anime}, {episode}
         </div>
-        <button onClick={() => {
-            getAnimeInfo("bheee");
-        }}>Change
-        </button>
         <NavLink to={"/home"}
         >
             Home
