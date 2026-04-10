@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import AnimeEntry from "./AnimeEntry.jsx";
 import {getIndex} from "../utils/jsonReader.js";
-import "./HomePage.css"
+import "./HomePage.css";
 
 function HomePage() {
     const [animeList, setAnimeList] = useState([]);

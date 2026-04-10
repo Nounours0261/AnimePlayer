@@ -1,6 +1,7 @@
 import "./Player.css";
 import {useEffect, useRef} from "react";
 import VideoControls from "./controls/VideoControls.jsx";
+import SubtitleHider from "./SubtitleHider.jsx";
 
 function Player({videoLink}) {
     const playerRef = useRef(null);
@@ -58,7 +59,8 @@ function Player({videoLink}) {
                 >
                 </video>
 
-                <div id={"subtitle-hider"}></div>
+                <SubtitleHider
+                />
             </div>
 
             <VideoControls videoRef={videoRef}

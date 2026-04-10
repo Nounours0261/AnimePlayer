@@ -1,4 +1,4 @@
-import Player from "./Player.jsx";
+import Player from "./player/Player.jsx";
 import {NavLink, useNavigate, useParams} from "react-router";
 import {useCallback, useEffect, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";

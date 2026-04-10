@@ -8,16 +8,16 @@ function AnimeEntry({path}) {
     const [info, setInfo] = useState({
         title: "",
         episodes: [],
-        cover: "/default-cover.png"
+        cover: "/default-cover.png",
     });
 
     const clearCover = useCallback(() => {
         const newInfo = {
-            ...info
+            ...info,
         };
         newInfo.cover = "/default-cover.png";
         setInfo(newInfo);
-    }, [info, setInfo])
+    }, [info, setInfo]);
 
 
     useEffect(() => {
