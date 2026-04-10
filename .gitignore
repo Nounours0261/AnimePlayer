@@ -1,6 +1,5 @@
 # Nours
 public/anime
-.idea
 ssl/*
 !ssl/setup_certs.sh
 

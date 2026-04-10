@@ -1,21 +1,24 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 
 function ProgressBar({videoRef}) {
     const progressRef = useRef(null);
+    const [videoProgress, setVideoProgress] = useState(0);
+    const [videoLength, setVideoLength] = useState(0);
 
     useEffect(() => {
         const curVideo = videoRef.current;
         const curProgress = progressRef.current;
 
         function metaDataHandler() {
-            curProgress.setAttribute("max", curVideo.duration);
+            setVideoLength(curVideo.duration);
         }
 
         function timeUpdateHandler() {
-            if (!curProgress.getAttribute("max"))
-                curProgress.setAttribute("max", curVideo.duration);
-            curProgress.value = curVideo.currentTime;
+            if (videoLength === 0) {
+                setVideoLength(curVideo.duration);
+            }
+            setVideoProgress(curVideo.currentTime);
         }
 
         function clickHandler(e) {
@@ -34,15 +37,27 @@ function ProgressBar({videoRef}) {
             curVideo.removeEventListener("timeupdate", timeUpdateHandler);
             curProgress.removeEventListener("click", clickHandler);
         };
-    }, [videoRef]);
+    }, [videoLength, videoRef]);
+
+    function formatTime() {
+        const floored = Math.floor(videoProgress);
+        const mins = Math.floor(floored / 60);
+        const secs = floored % 60;
+        return `${mins < 10 ? "0" : ""}${mins}:${secs < 10 ? "0" : ""}${secs}`;
+    }
 
     return (
-        <progress id={"progress"}
-                  value={50}
-                  ref={progressRef}
+        <div id={"progress-holder"}
         >
-
-        </progress>
+            <span>
+                {formatTime()}
+            </span>
+            <progress id={"progress"}
+                      value={videoProgress}
+                      ref={progressRef}
+                      max={videoLength}
+            />
+        </div>
     );
 }
 

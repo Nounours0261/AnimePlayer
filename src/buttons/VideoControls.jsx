@@ -38,16 +38,17 @@ function VideoControls({videoRef, playerRef}) {
     return (<div id="video-controls"
                  ref={controlsRef}
     >
-        <PlayPauseButton videoRef={videoRef}/>
+        <PlayPauseButton videoRef={videoRef}
+        />
 
         <ProgressBar videoRef={videoRef}
-        >
+        />
 
-        </ProgressBar>
         <VolumeBar videoRef={videoRef}
         />
 
-        <FullscreenButton playerRef={playerRef}/>
+        <FullscreenButton playerRef={playerRef}
+        />
     </div>);
 }
 
