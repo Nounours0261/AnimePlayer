@@ -2,7 +2,7 @@ import Player from "./Player.jsx";
 import {NavLink, useNavigate, useParams} from "react-router";
 import {useCallback, useEffect, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";
-import {getAnimeInfo} from "./utils/jsonReader.js";
+import {getAnimeInfo} from "../utils/jsonReader.js";
 
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});

@@ -1,6 +1,6 @@
 import "./Player.css";
 import {useEffect, useRef} from "react";
-import VideoControls from "./buttons/VideoControls.jsx";
+import VideoControls from "./controls/VideoControls.jsx";
 
 function Player({videoLink}) {
     const playerRef = useRef(null);

@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
-import {getAnimeInfo} from "./utils/jsonReader.js";
+import {getAnimeInfo} from "../utils/jsonReader.js";
 
 function AnimeEntry({path}) {
 

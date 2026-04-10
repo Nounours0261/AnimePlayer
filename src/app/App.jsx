@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
-import HomePage from "./HomePage.jsx";
-import WatchPage from "./WatchPage.jsx";
+import HomePage from "../home/HomePage.jsx";
+import WatchPage from "../watch/WatchPage.jsx";
 
 function App() {
 
