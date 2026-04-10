@@ -41,7 +41,7 @@ function VideoControls({videoRef, playerRef}) {
         <PlayPauseButton videoRef={videoRef}/>
 
         <ProgressBar videoRef={videoRef}
-            >
+        >
 
         </ProgressBar>
         <VolumeBar videoRef={videoRef}

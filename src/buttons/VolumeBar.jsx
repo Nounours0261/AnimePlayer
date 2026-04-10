@@ -28,15 +28,13 @@ function VolumeBar({videoRef}) {
         volumeRef.current.value = volumeSetting;
     }, [videoRef]);
 
-    return (
-        <progress id={"volume"}
-                  value={1}
-                  ref={volumeRef}
-                  max={1}
-        >
+    return (<progress id={"volume"}
+                      value={1}
+                      ref={volumeRef}
+                      max={1}
+    >
 
-        </progress>
-    );
+    </progress>);
 }
 
 export default VolumeBar;

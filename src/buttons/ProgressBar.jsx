@@ -8,7 +8,7 @@ function ProgressBar({videoRef}) {
         const curVideo = videoRef.current;
         const curProgress = progressRef.current;
 
-        function metaDataHandler () {
+        function metaDataHandler() {
             curProgress.setAttribute("max", curVideo.duration);
         }
 
@@ -16,7 +16,6 @@ function ProgressBar({videoRef}) {
             if (!curProgress.getAttribute("max"))
                 curProgress.setAttribute("max", curVideo.duration);
             curProgress.value = curVideo.currentTime;
-            console.log(videoRef.current.volume)
         }
 
         function clickHandler(e) {

@@ -23,7 +23,7 @@
 
             position: absolute;
             bottom: 6%;
-            left : calc((100% - var(--width)) / 2);
+            left: calc((100% - var(--width)) / 2);
             background-color: cyan;
         }
     }
