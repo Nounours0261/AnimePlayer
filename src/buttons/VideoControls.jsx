@@ -3,6 +3,7 @@ import FullscreenButton from "./FullscreenButton.jsx";
 import {useEffect, useRef} from "react";
 import ProgressBar from "./ProgressBar.jsx";
 import "./VideoControls.css";
+import VolumeBar from "./VolumeBar.jsx";
 
 function VideoControls({videoRef, playerRef}) {
     const controlsRef = useRef(null);
@@ -43,11 +44,8 @@ function VideoControls({videoRef, playerRef}) {
             >
 
         </ProgressBar>
-        <progress id={"volume"}
-                  value={50}
-        >
-
-        </progress>
+        <VolumeBar videoRef={videoRef}
+        />
 
         <FullscreenButton playerRef={playerRef}/>
     </div>);

@@ -8,22 +8,33 @@ function ProgressBar({videoRef}) {
         const curVideo = videoRef.current;
         const curProgress = progressRef.current;
 
-        curVideo.addEventListener("loadedmetadata", () => {
+        function metaDataHandler () {
             curProgress.setAttribute("max", curVideo.duration);
-        });
+        }
 
-        curVideo.addEventListener("timeupdate", () => {
+        function timeUpdateHandler() {
             if (!curProgress.getAttribute("max"))
                 curProgress.setAttribute("max", curVideo.duration);
             curProgress.value = curVideo.currentTime;
-        });
+            console.log(videoRef.current.volume)
+        }
 
-        curProgress.addEventListener("click", (e) => {
+        function clickHandler(e) {
             if (!Number.isFinite(curVideo.duration)) return;
             const rect = curProgress.getBoundingClientRect();
             const pos = (e.pageX - rect.left) / curProgress.offsetWidth;
             curVideo.currentTime = pos * curVideo.duration;
-        });
+        }
+
+        curVideo.addEventListener("loadedmetadata", metaDataHandler);
+        curVideo.addEventListener("timeupdate", timeUpdateHandler);
+        curProgress.addEventListener("click", clickHandler);
+
+        return () => {
+            curVideo.removeEventListener("loadedmetadata", metaDataHandler);
+            curVideo.removeEventListener("timeupdate", timeUpdateHandler);
+            curProgress.removeEventListener("click", clickHandler);
+        };
     }, [videoRef]);
 
     return (
