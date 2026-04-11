@@ -1,42 +1,67 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useMemo, useState} from "react";
 
 function VolumeBar({videoRef}) {
-    const volumeRef = useRef(null);
+    const [volume, setVolume] = useState(parseInt(localStorage.getItem("volume") ?? 100));
 
-    // click event listener for sound setting
+    // Set initial volume
     useEffect(() => {
-        const curVideo = videoRef.current;
-        const curVolume = volumeRef.current;
+        videoRef.current.volume = parseInt(localStorage.getItem("volume") ?? 100) / 100;
+    }, [videoRef]);
 
-        function clickHandler(e) {
-            const rect = curVolume.getBoundingClientRect();
-            const newVolume = (e.pageX - rect.left) / curVolume.offsetWidth;
-            curVideo.volume = newVolume;
-            curVolume.value = newVolume;
-            localStorage.setItem("volume", newVolume);
+    // throttled function to change the video volume
+    const changeVideoVolume = useMemo(() => {
+        function wrapper() {
+            let isWaiting = false;
+            let savedValue = null;
+            let interval = null;
+
+            function throttled(n) {
+                if (isWaiting) {
+                    savedValue = n;
+                    return;
+                }
+
+                const curVideo = videoRef.current;
+
+                curVideo.volume = n / 100;
+                localStorage.setItem("volume", n);
+                isWaiting = true;
+
+                interval = setInterval(() => {
+                    if (savedValue !== null) {
+                        curVideo.volume = savedValue / 100;
+                        localStorage.setItem("volume", savedValue);
+                        savedValue = null;
+                    } else {
+                        clearInterval(interval);
+                        interval = null;
+                        isWaiting = false;
+                    }
+                }, 50);
+            }
+
+            return throttled;
         }
 
-        curVolume.addEventListener("click", clickHandler);
-
-        return () => {
-            curVolume.removeEventListener("click", clickHandler);
-        };
+        return wrapper();
     }, [videoRef]);
 
-    // load settings from browser on display
-    useEffect(() => {
-        const volumeSetting = localStorage.getItem("volume") ?? 1;
-        videoRef.current.volume = volumeSetting;
-        volumeRef.current.value = volumeSetting;
-    }, [videoRef]);
+    function inputHandler(e) {
+        setVolume(e.target.value);
+        changeVideoVolume(e.target.value);
+    }
 
-    return (<progress id={"volume"}
-                      value={1}
-                      ref={volumeRef}
-                      max={1}
-    >
+    return (
+        <input id={"volume"}
+               type={"range"}
+               min={0}
+               max={100}
+               value={volume}
+               onInput={inputHandler}
+        >
 
-    </progress>);
+        </input>
+    );
 }
 
 export default VolumeBar;

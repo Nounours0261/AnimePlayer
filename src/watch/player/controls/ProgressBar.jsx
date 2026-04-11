@@ -1,16 +1,16 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 
 
 function ProgressBar({videoRef}) {
     const progressRef = useRef(null);
     const [videoProgress, setVideoProgress] = useState(0);
     const [videoLength, setVideoLength] = useState(0);
+    const isMoving = useRef(false);
 
     // video event handlers for setting state
     // bar click handler for time changing
     useEffect(() => {
         const curVideo = videoRef.current;
-        const curProgress = progressRef.current;
 
         function metaDataHandler() {
             setVideoLength(curVideo.duration);
@@ -20,32 +20,76 @@ function ProgressBar({videoRef}) {
             if (videoLength === 0) {
                 setVideoLength(curVideo.duration);
             }
-            setVideoProgress(curVideo.currentTime);
-        }
-
-        function clickHandler(e) {
-            if (!Number.isFinite(curVideo.duration)) return;
-            const rect = curProgress.getBoundingClientRect();
-            const pos = (e.pageX - rect.left) / curProgress.offsetWidth;
-            curVideo.currentTime = pos * curVideo.duration;
+            if (!isMoving.current) {
+                setVideoProgress(curVideo.currentTime);
+            }
         }
 
         curVideo.addEventListener("loadedmetadata", metaDataHandler);
         curVideo.addEventListener("timeupdate", timeUpdateHandler);
-        curProgress.addEventListener("click", clickHandler);
 
         return () => {
             curVideo.removeEventListener("loadedmetadata", metaDataHandler);
             curVideo.removeEventListener("timeupdate", timeUpdateHandler);
-            curProgress.removeEventListener("click", clickHandler);
         };
-    }, [videoLength, videoRef]);
+    }, [videoLength, videoRef, isMoving]);
+
+    // throttled function to change the current time when seeking
+    const changeVideoTime = useMemo(() => {
+        function wrapper() {
+            let isWaiting = false;
+            let savedValue = null;
+            let interval = null;
+
+            function throttled(n) {
+                if (isWaiting) {
+                    savedValue = n;
+                    return;
+                }
+
+                const curVideo = videoRef.current;
+
+                curVideo.currentTime = n;
+                isWaiting = true;
+                isMoving.current = true;
+
+                interval = setInterval(() => {
+                    if (savedValue !== null) {
+                        curVideo.currentTime = savedValue;
+                        savedValue = null;
+                    } else {
+                        clearInterval(interval);
+                        interval = null;
+                        isWaiting = false;
+                        isMoving.current = false;
+                    }
+                }, 50);
+            }
+
+            return throttled;
+        }
+
+        return wrapper();
+    }, [videoRef]);
 
     function formatTime() {
         const floored = Math.floor(videoProgress);
-        const mins = Math.floor(floored / 60);
+        const totalMins = Math.floor(floored / 60);
+
         const secs = floored % 60;
-        return `${mins < 10 ? "0" : ""}${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        const mins = totalMins % 60;
+        const hours = Math.floor(totalMins / 60);
+
+        const secString = `${secs < 10 ? "0" : ""}${secs}`;
+        const minString = `${mins < 10 ? "0" : ""}${totalMins}`;
+        const hourString = hours > 0 ? `${hours}:` : "";
+        return `${hourString}${minString}:${secString}`;
+    }
+
+    function inputHandler(e) {
+        setVideoProgress(e.target.value);
+        changeVideoTime(e.target.value);
+        progressRef.current.blur();
     }
 
     return (
@@ -54,10 +98,13 @@ function ProgressBar({videoRef}) {
             <span>
                 {formatTime()}
             </span>
-            <progress id={"progress"}
-                      value={videoProgress}
-                      ref={progressRef}
-                      max={videoLength}
+            <input id={"progress"}
+                   type={"range"}
+                   min={0}
+                   max={videoLength}
+                   value={videoProgress}
+                   ref={progressRef}
+                   onInput={inputHandler}
             />
         </div>
     );

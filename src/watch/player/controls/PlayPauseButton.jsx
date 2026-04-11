@@ -49,7 +49,8 @@ function PlayPauseButton({videoRef}) {
 
     return <button id={"play-pause"}
                    type={"button"}
-                   onClick={playPause}
+                   onClick={() => {playPause();
+                       document.querySelector("#play-pause").blur();}}
     >
         Play/Pause
     </button>;

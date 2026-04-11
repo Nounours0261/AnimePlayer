@@ -11,8 +11,14 @@
 
         #progress {
             width: stretch;
+            cursor: pointer;
             accent-color: goldenrod;
         }
+    }
+
+    #volume {
+        cursor: pointer;
+        height: 30px;
     }
 }
 
