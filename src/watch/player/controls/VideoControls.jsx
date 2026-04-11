@@ -4,6 +4,7 @@ import {useEffect, useRef} from "react";
 import ProgressBar from "./ProgressBar.jsx";
 import "./VideoControls.css";
 import VolumeBar from "./VolumeBar.jsx";
+import SkipRewind from "./SkipRewind.jsx";
 
 function VideoControls({videoRef, playerRef}) {
     const controlsRef = useRef(null);
@@ -45,6 +46,9 @@ function VideoControls({videoRef, playerRef}) {
         />
 
         <VolumeBar videoRef={videoRef}
+        />
+
+        <SkipRewind videoRef={videoRef}
         />
 
         <FullscreenButton playerRef={playerRef}
