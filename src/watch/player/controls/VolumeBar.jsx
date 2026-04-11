@@ -24,13 +24,13 @@ function VolumeBar({videoRef}) {
                 const curVideo = videoRef.current;
 
                 curVideo.volume = n / 100;
-                localStorage.setItem("volume", n);
+                localStorage.setItem("volume", `${n}`);
                 isWaiting = true;
 
                 interval = setInterval(() => {
                     if (savedValue !== null) {
                         curVideo.volume = savedValue / 100;
-                        localStorage.setItem("volume", savedValue);
+                        localStorage.setItem("volume", `${savedValue}`);
                         savedValue = null;
                     } else {
                         clearInterval(interval);

@@ -2,14 +2,14 @@ import {useEffect, useState} from "react";
 import "./SubtitleHider.css";
 
 function SubtitleHider() {
-    const [hidden, setHidden] = useState(!!(localStorage.getItem("hide-subtitles") ?? false));
+    const [showHider, setShowHider] = useState((localStorage.getItem("hide-subtitles") ?? "false") === "true");
 
     // keyboard handler for enable/disable
     useEffect(() => {
         function keyHandler(e) {
             if (e.key === "h") {
-                setHidden(!hidden);
-                localStorage.setItem("hide-subtitles", !hidden);
+                setShowHider(!showHider);
+                localStorage.setItem("hide-subtitles", `${!showHider}`);
             }
         }
 
@@ -18,11 +18,11 @@ function SubtitleHider() {
         return () => {
             window.removeEventListener("keydown", keyHandler);
         };
-    }, [hidden]);
+    }, [showHider]);
 
     return (
         <div id={"subtitle-hider"}
-             className={hidden ? "hidden" : "shown"}
+             className={showHider ? "shown" : "hidden"}
         >
 
         </div>
