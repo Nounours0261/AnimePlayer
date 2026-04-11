@@ -1,6 +1,6 @@
 import PlayPauseButton from "./PlayPauseButton.jsx";
 import FullscreenButton from "./FullscreenButton.jsx";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import ProgressBar from "./ProgressBar.jsx";
 import "./VideoControls.css";
 import VolumeBar from "./VolumeBar.jsx";
@@ -9,28 +9,29 @@ import SkipRewind from "./SkipRewind.jsx";
 function VideoControls({videoRef, playerRef}) {
     const controlsRef = useRef(null);
     const hideTimeout = useRef(0);
+    const [shown, setShown] = useState(false);
+
+    function showControls() {
+        setShown(true);
+
+        if (hideTimeout.current !== 0) {
+            clearTimeout(hideTimeout.current);
+        }
+
+        if (!controlsRef.current.matches(":hover")) {
+            hideTimeout.current = setTimeout(() => {
+                setShown(false);
+                hideTimeout.current = 0;
+            }, 1000);
+        }
+    }
 
     // move event listener for hiding controls
     useEffect(() => {
-        function moveHandler() {
-            controlsRef.current.style.display = "block";
-
-            if (hideTimeout.current !== 0) {
-                clearTimeout(hideTimeout.current);
-            }
-
-            if (!controlsRef.current.matches(":hover")) {
-                hideTimeout.current = setTimeout(() => {
-                    controlsRef.current.style.display = "none";
-                    hideTimeout.current = 0;
-                }, 1000);
-            }
-        }
-
-        window.addEventListener("mousemove", moveHandler);
+        window.addEventListener("mousemove", showControls);
 
         return () => {
-            window.removeEventListener("mousemove", moveHandler);
+            window.removeEventListener("mousemove", showControls);
             if (hideTimeout.current !== 0) {
                 clearTimeout(hideTimeout.current);
             }
@@ -39,6 +40,7 @@ function VideoControls({videoRef, playerRef}) {
 
     return (<div id="video-controls"
                  ref={controlsRef}
+                 className={shown ? "shown" : "hidden"}
     >
         <PlayPauseButton videoRef={videoRef}
         />
@@ -50,6 +52,7 @@ function VideoControls({videoRef, playerRef}) {
         />
 
         <SkipRewind videoRef={videoRef}
+                    showControls={showControls}
         />
 
         <FullscreenButton playerRef={playerRef}

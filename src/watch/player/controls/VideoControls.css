@@ -1,5 +1,4 @@
 #video-controls {
-    display: flex;
     flex-direction: row;
     align-items: center;
 
@@ -15,4 +14,12 @@
             accent-color: goldenrod;
         }
     }
+}
+
+#video-controls.shown {
+    display: flex;
+}
+
+#video-controls.hidden {
+    display: none;
 }
