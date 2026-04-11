@@ -13,6 +13,8 @@ function FullscreenButton({playerRef}) {
         // state is set in an event listener
     }, [isFull, playerRef]);
 
+    // fullscreen keyboard handler
+    // fullscreen event listener for state setting
     useEffect(() => {
         function keyHandler(event) {
             if (event.key === "f") {
@@ -22,15 +24,15 @@ function FullscreenButton({playerRef}) {
             }
         }
 
-        function escapeHandler() {
+        function fullscreenHandler() {
             setIsFull(document.fullscreenElement !== null);
         }
 
-        window.addEventListener("fullscreenchange", escapeHandler);
+        window.addEventListener("fullscreenchange", fullscreenHandler);
         window.addEventListener("keydown", keyHandler);
 
         return () => {
-            window.removeEventListener("fullscreenchange", escapeHandler);
+            window.removeEventListener("fullscreenchange", fullscreenHandler);
             window.removeEventListener("keydown", keyHandler);
         };
     }, [isFull, setIsFull, swapFullscreen]);

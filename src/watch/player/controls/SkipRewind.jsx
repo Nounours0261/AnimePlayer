@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 
 function SkipRewind({videoRef}) {
+    // keyboard handler for skip/rewind
     useEffect(() => {
         const curVideo = videoRef.current;
 

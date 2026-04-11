@@ -13,6 +13,9 @@ function PlayPauseButton({videoRef}) {
         }
     }, [isPlaying, videoRef]);
 
+    // play/pause keyboard handler
+    // video click handler for play/pause
+    // play/pause event listeners for state setting
     useEffect(() => {
         function keyHandler(event) {
             if (event.key === " ") {

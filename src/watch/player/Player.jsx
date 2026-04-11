@@ -9,6 +9,7 @@ function Player({videoLink}) {
     const videoHolderRef = useRef(null);
     const hideMouseTimeout = useRef(0);
 
+    // hide mouse when inactive
     useEffect(() => {
         function moveHandler() {
             videoHolderRef.current.style.cursor = "auto";
@@ -35,6 +36,7 @@ function Player({videoLink}) {
         };
     }, []);
 
+    // play video when entering the page
     useEffect(() => {
         if (videoLink !== "") {
             videoRef.current.play().catch((reason) => {

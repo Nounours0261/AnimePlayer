@@ -1,7 +1,7 @@
 import "./EpisodeList.css";
 
 function EpisodeList({count, selected, select}) {
-    function makeDiv(i) {
+    function makeItem(i) {
         return (
             <button className={"list-entry" + (i === selected ? " selected" : "")}
                     onClick={() => {
@@ -19,7 +19,7 @@ function EpisodeList({count, selected, select}) {
         >
             {
                 [...Array(count).keys()].map((i) => {
-                    return makeDiv(i + 1);
+                    return makeItem(i + 1);
                 })
             }
         </div>

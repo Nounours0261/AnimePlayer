@@ -4,6 +4,7 @@ import "./SubtitleHider.css";
 function SubtitleHider() {
     const [hidden, setHidden] = useState(!!(localStorage.getItem("hide-subtitles") ?? false));
 
+    // keyboard handler for enable/disable
     useEffect(() => {
         function keyHandler(e) {
             if (e.key === "h") {

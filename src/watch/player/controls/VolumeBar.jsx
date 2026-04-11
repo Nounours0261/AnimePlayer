@@ -3,6 +3,7 @@ import {useEffect, useRef} from "react";
 function VolumeBar({videoRef}) {
     const volumeRef = useRef(null);
 
+    // click event listener for sound setting
     useEffect(() => {
         const curVideo = videoRef.current;
         const curVolume = volumeRef.current;
@@ -22,6 +23,7 @@ function VolumeBar({videoRef}) {
         };
     }, [videoRef]);
 
+    // load settings from browser on display
     useEffect(() => {
         const volumeSetting = localStorage.getItem("volume") ?? 1;
         videoRef.current.volume = volumeSetting;

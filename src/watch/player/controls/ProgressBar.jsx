@@ -6,6 +6,8 @@ function ProgressBar({videoRef}) {
     const [videoProgress, setVideoProgress] = useState(0);
     const [videoLength, setVideoLength] = useState(0);
 
+    // video event handlers for setting state
+    // bar click handler for time changing
     useEffect(() => {
         const curVideo = videoRef.current;
         const curProgress = progressRef.current;

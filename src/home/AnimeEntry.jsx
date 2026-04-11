@@ -4,7 +4,6 @@ import {NavLink} from "react-router";
 import {getAnimeInfo} from "../utils/jsonReader.js";
 
 function AnimeEntry({path}) {
-
     const [info, setInfo] = useState({
         title: "",
         episodes: [],
@@ -19,7 +18,7 @@ function AnimeEntry({path}) {
         setInfo(newInfo);
     }, [info, setInfo]);
 
-
+    // load info on creation
     useEffect(() => {
         let ignore = false;
         getAnimeInfo(path).then((res) => {

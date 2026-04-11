@@ -10,6 +10,7 @@ function VideoControls({videoRef, playerRef}) {
     const controlsRef = useRef(null);
     const hideTimeout = useRef(0);
 
+    // move event listener for hiding controls
     useEffect(() => {
         function moveHandler() {
             controlsRef.current.style.display = "block";

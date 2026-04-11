@@ -7,7 +7,6 @@ import {getAnimeInfo} from "../utils/jsonReader.js";
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});
     const [link, setLink] = useState(null);
-
     const {anime, episode} = useParams();
     const navigate = useNavigate();
 
@@ -16,6 +15,7 @@ function WatchPage() {
         setLink(`/anime/${anime}/${((animeInfo.episodes ?? [])[number - 1] ?? "")}`);
     }, [anime, animeInfo.episodes, navigate]);
 
+    // load data on display
     useEffect(() => {
         let ignore = false;
         getAnimeInfo(anime).then((info) => {
@@ -33,6 +33,7 @@ function WatchPage() {
         };
     }, []);
 
+    // keyboard handler for changing episodes
     useEffect(() => {
         function keyHandler(e) {
             if (e.key === "d") {

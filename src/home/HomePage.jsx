@@ -6,6 +6,7 @@ import "./HomePage.css";
 function HomePage() {
     const [animeList, setAnimeList] = useState([]);
 
+    // load anime index on creation
     useEffect(() => {
         let ignore = false;
         getIndex().then((index) => {
@@ -25,11 +26,11 @@ function HomePage() {
     return (<div id={"anime-list"}>
         {
             animeList.map((anime, index) => {
-                return <AnimeEntry path={anime}
-                                   key={index}
-                >
-                    {anime}
-                </AnimeEntry>;
+                return (
+                    <AnimeEntry path={anime}
+                                key={index}
+                    />
+                );
             })
         }
     </div>);
