@@ -11,6 +11,16 @@ function WatchPage() {
     const navigate = useNavigate();
 
     const changeEpisode = useCallback((number) => {
+        if (number > animeInfo.episodes.length) {
+            console.warn(`This anime has less than ${number} episodes`);
+            return;
+        }
+
+        if (number < 1) {
+            console.warn(`Episode numbers start at 1, cannot access episode ${number}`);
+            return;
+        }
+
         navigate(`/watch/${anime}/${number}`);
         setLink(`/anime/${anime}/${((animeInfo.episodes ?? [])[number - 1] ?? "")}`);
     }, [anime, animeInfo.episodes, navigate]);
@@ -58,6 +68,9 @@ function WatchPage() {
         />
 
         <Player videoLink={link}
+                playNext={() => {
+                    changeEpisode(parseInt(episode) + 1);
+                }}
         />
 
         <div>

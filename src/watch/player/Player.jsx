@@ -3,7 +3,7 @@ import {useEffect, useRef} from "react";
 import VideoControls from "./controls/VideoControls.jsx";
 import SubtitleHider from "./SubtitleHider.jsx";
 
-function Player({videoLink}) {
+function Player({videoLink, playNext}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
@@ -38,7 +38,7 @@ function Player({videoLink}) {
 
     // play video when entering the page
     useEffect(() => {
-        if (videoLink !== "") {
+        if (videoLink !== "" && !document.hidden) {
             videoRef.current.play().catch((reason) => {
                 if (reason.name !== "NotAllowedError") {
                     console.error(reason);
@@ -46,6 +46,21 @@ function Player({videoLink}) {
             });
         }
     }, [videoLink]);
+
+    // play next episode when the current one ends
+    useEffect(() => {
+        const curVideo = videoRef.current;
+
+        function endedHandler() {
+            playNext();
+        }
+
+        curVideo.addEventListener("ended", endedHandler);
+
+        return () => {
+            curVideo.removeEventListener("ended", endedHandler);
+        };
+    }, [playNext]);
 
     return (
         <figure id={"player"}
