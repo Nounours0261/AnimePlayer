@@ -1,20 +1,58 @@
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 
 function SkipRewind({videoRef, showControls}) {
-    // keyboard handler for skip/rewind
-    useEffect(() => {
-        const curVideo = videoRef.current;
+    const changeVideoTime = useMemo(() => {
+        function wrapper() {
+            let isWaiting = false;
+            let savedValue = null;
+            let interval = null;
 
-        function keyHandler(e) {
-            if (e.key === "ArrowRight") {
+            function throttled(n) {
+                if (isWaiting) {
+                    savedValue = n;
+                    return;
+                }
+
+                const curVideo = videoRef.current;
                 if (curVideo.currentTime < curVideo.duration) {
-                    curVideo.currentTime += 5;
+                    curVideo.currentTime += n;
                 }
                 showControls();
+                isWaiting = true;
+
+                interval = setInterval(() => {
+                    if (savedValue !== null) {
+                        if (curVideo.currentTime < curVideo.duration) {
+                            curVideo.currentTime += savedValue;
+                        }
+                        showControls();
+                        savedValue = null;
+                    } else {
+                        clearInterval(interval);
+                        interval = null;
+                        isWaiting = false;
+                    }
+                }, 333);
+            }
+
+            return throttled;
+        }
+
+        return wrapper();
+    }, [showControls, videoRef]);
+
+    // keyboard handler for skip/rewind
+    useEffect(() => {
+        function keyHandler(e) {
+            if (e.key === "ArrowRight") {
+                changeVideoTime(5);
+                console.log("skip");
             }
             if (e.key === "ArrowLeft") {
-                curVideo.currentTime -= 5;
-                showControls();
+                changeVideoTime(-5);
+            }
+            if (e.key === "u") {
+                changeVideoTime(85);
             }
         }
 
@@ -23,7 +61,7 @@ function SkipRewind({videoRef, showControls}) {
         return () => {
             window.removeEventListener("keydown", keyHandler);
         };
-    }, [showControls, videoRef]);
+    }, [changeVideoTime, showControls, videoRef]);
 
     return (<></>);
 }
