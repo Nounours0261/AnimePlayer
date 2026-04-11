@@ -35,15 +35,25 @@ export async function complementInfo(directory) {
 
     try {
         const contents = await fs.readFile(infoPath);
-        const asJson = JSON.parse(contents);
+        const oldData = JSON.parse(contents);
 
-        const data = await getInfo(directory, asJson.cover === null);
+        const calcData = await getInfo(directory, oldData.cover === null);
+        const missingEpisodes = calcData.episodes.filter((episode) => {
+            return !((oldData.episodes ?? []).includes(episode));
+        });
 
-        data.title = asJson.title ?? data.title;
-        data.episodes = asJson.episodes ?? data.episodes;
-        data.cover = asJson.cover ?? data.cover;
+        const newData = {};
+        newData.title = oldData.title ?? calcData.title;
+        newData.episodes = oldData.episodes ?? [];
+        newData.episodes.push(...missingEpisodes);
+        newData.episodes.sort();
+        newData.cover = oldData.cover ?? calcData.cover;
 
-        await fs.writeFile(infoPath, JSON.stringify(data, null, 2));
+        if (missingEpisodes.length !== 0) {
+            console.log(`Added ${missingEpisodes.length} episode${missingEpisodes.length > 1 ? "s" : ""} to '${newData.title}'`);
+        }
+
+        await fs.writeFile(infoPath, JSON.stringify(newData, null, 2));
     } catch (e) {
         if (e.code !== "ENOENT" && e.name !== "SyntaxError") {
             console.error(`Failed to create info file for '${directory}'`);

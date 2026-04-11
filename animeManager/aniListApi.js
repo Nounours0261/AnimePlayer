@@ -26,6 +26,7 @@ query ($title: String) {
             }),
         };
 
+    console.log(`Fetching cover for '${title}'`);
     return fetch(url, options).then(handleResponse)
         .then(handleData)
         .catch(handleError);
