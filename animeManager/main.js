@@ -2,6 +2,7 @@ import {complementInfo, overWriteInfo} from "./infoHelper.js";
 import path from "path";
 import fs from "node:fs/promises";
 import {argv} from 'node:process';
+import "./consoleHelpers.js";
 
 const animeDir = path.join(process.cwd(), "public", "anime");
 

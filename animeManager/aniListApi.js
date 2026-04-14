@@ -27,23 +27,24 @@ query ($title: String) {
         };
 
     console.log(`Fetching cover for '${title}'`);
-    return fetch(url, options).then(handleResponse)
-        .then(handleData)
-        .catch(handleError);
-
-    function handleResponse(response) {
-        return response.json().then((json) => {
-            return response.ok ? json : Promise.reject(json);
+    const res = await fetch(url, options);
+    if (res.ok) {
+        try {
+            const json = await res.json();
+            return json.data.Media.coverImage.large;
+        } catch (e) {
+            console.error(`Ran into error '${e}' while fetching cover for '${title}'`);
+            return null;
+        }
+    }
+    if (res.status === 429) {
+        const timeToWait = parseInt(res.headers.get("retry-after")) + 3;
+        console.warn(`Received TooManyRequests from AniList API, trying again in ${timeToWait} seconds`);
+        await new Promise((resolve) => {
+            setTimeout(resolve, timeToWait * 1000);
         });
+        return getCoverUrl(title);
     }
-
-    function handleData(data) {
-        return data.data.Media.coverImage.large;
-    }
-
-    function handleError(error) {
-        console.error(`Failed to get cover for ${title}`);
-        console.error(error);
-        return null;
-    }
+    console.error(`Received code ${res.status} (${res.statusText}) while fetching cover for '${title}'`);
+    return null;
 }

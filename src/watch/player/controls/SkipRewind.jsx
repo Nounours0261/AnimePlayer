@@ -46,7 +46,6 @@ function SkipRewind({videoRef, showControls}) {
         function keyHandler(e) {
             if (e.key === "ArrowRight") {
                 changeVideoTime(5);
-                console.log("skip");
             }
             if (e.key === "ArrowLeft") {
                 changeVideoTime(-5);
