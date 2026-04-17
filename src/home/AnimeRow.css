@@ -1,0 +1,29 @@
+.anime-row {
+    width: 100%;
+    flex-direction: column;
+
+    .anime-row-title {
+        text-align: center;
+        background-color: crimson;
+        font-size: 3rem;
+    }
+
+    .anime-row-items {
+        box-sizing: border-box;
+        display: flex;
+        overflow-x: revert;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: safe center;
+        gap: 20px;
+        padding: 20px 20px;
+        background-color: mediumpurple;
+    }
+}
+
+.anime-row.one-line {
+    .anime-row-items {
+        overflow-x: scroll;
+        flex-wrap: nowrap;
+    }
+}

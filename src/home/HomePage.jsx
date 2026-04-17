@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import AnimeEntry from "./AnimeEntry.jsx";
 import {getIndex} from "../utils/jsonReader.js";
 import "./HomePage.css";
+import AnimeRow from "./AnimeRow.jsx";
 
 function HomePage() {
     const [animeList, setAnimeList] = useState([]);
@@ -23,16 +23,22 @@ function HomePage() {
         };
     }, []);
 
-    return (<div id={"anime-list"}>
-        {
-            animeList.map((anime, index) => {
-                return (
-                    <AnimeEntry path={anime}
-                                key={index}
-                    />
-                );
-            })
-        }
+    const seasonal = JSON.parse(localStorage.getItem("seasonal") ?? "[]");
+
+    const seasonalPaths = animeList.filter((p) => {
+        return seasonal.includes(p);
+    });
+
+    return (<div id={"anime-list"}
+    >
+        <AnimeRow paths={seasonalPaths}
+                  oneLine={true}
+                  title={"Seasonal"}
+        />
+        <AnimeRow paths={animeList}
+                  oneLine={false}
+                  title={"All"}
+        />
     </div>);
 }
 

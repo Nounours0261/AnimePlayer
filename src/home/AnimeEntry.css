@@ -2,31 +2,57 @@
     width: fit-content;
     height: fit-content;
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: row;
 
-    .poster {
+    .left-side {
         width: 230px;
         height: 325px;
-        display: block;
+        position: relative;
+
+        .poster {
+            width: 230px;
+            height: 325px;
+            display: block;
+            background-color: magenta;
+        }
+
+        .title {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .button-holder {
+            width: 100%;
+            height: 30%;
+            position: absolute;
+            bottom: 35%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .info-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     }
 
-    .title {
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        color: white;
+    .right-side {
+        flex-direction: column;
     }
 
-    .button-holder {
-        width: 100%;
-        height: 30%;
-        position: absolute;
-        bottom: 35%;
-        background-color: rgba(0, 0, 0, 0.4);
+    .right-side.shown {
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
+    }
+
+    .right-side.hidden {
+        display: none;
     }
 }
