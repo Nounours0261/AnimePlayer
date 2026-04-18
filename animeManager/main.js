@@ -3,6 +3,7 @@ import path from "path";
 import fs from "node:fs/promises";
 import {argv} from 'node:process';
 import "./consoleHelpers.js";
+import {moveDownloads} from "./moveDownloads.js";
 
 const animeDir = path.join(process.cwd(), "public", "anime");
 
@@ -11,8 +12,16 @@ async function main() {
 
     let infoFun = complementInfo;
     if (argv.includes("-f")) {
+        console.green("force option was used, all data will be recalculated/fetched");
         infoFun = overWriteInfo;
     }
+
+    if (argv.includes("-u")) {
+        console.green("update option was used, downloads will be checked");
+        await moveDownloads();
+    }
+
+    console.blue("Updating index");
 
     const list = [];
     for (const file of files) {
@@ -30,5 +39,5 @@ async function main() {
 }
 
 main().then(() => {
-    console.log("Gallery updated !");
+    console.cyan("Index updated !");
 });

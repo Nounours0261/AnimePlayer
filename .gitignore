@@ -2,6 +2,7 @@
 public/anime
 ssl/*
 !ssl/setup_certs.sh
+animeManager/config.json
 
 # Logs
 logs
