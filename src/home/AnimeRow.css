@@ -11,7 +11,6 @@
     .anime-row-items {
         box-sizing: border-box;
         display: flex;
-        overflow-x: revert;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: safe center;
@@ -23,7 +22,7 @@
 
 .anime-row.one-line {
     .anime-row-items {
-        overflow-x: scroll;
+        overflow-x: auto;
         flex-wrap: nowrap;
     }
 }

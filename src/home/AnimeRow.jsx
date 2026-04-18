@@ -1,7 +1,7 @@
 import AnimeEntry from "./AnimeEntry.jsx";
 import "./AnimeRow.css";
 
-function AnimeRow({paths, oneLine, title}) {
+function AnimeRow({paths, oneLine, title, homePageRef}) {
     return (<div className={`anime-row ${oneLine ? "one-line" : ""}`}
     >
         <div className={"anime-row-title"}
@@ -14,6 +14,7 @@ function AnimeRow({paths, oneLine, title}) {
                 return (
                     <AnimeEntry path={anime}
                                 key={index}
+                                homePageRef={homePageRef}
                     />
                 );
             })}

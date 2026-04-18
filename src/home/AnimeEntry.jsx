@@ -2,8 +2,9 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
 import {getAnimeInfo} from "../utils/jsonReader.js";
+import {listUpdateEvent} from "./HomeEvents.js";
 
-function AnimeEntry({path}) {
+function AnimeEntry({path, homePageRef}) {
     const [info, setInfo] = useState({
         title: "", episodes: [], cover: "/default-cover.png",
     });
@@ -81,6 +82,7 @@ function AnimeEntry({path}) {
             }
 
             setDetailed(false);
+            homePageRef.current.dispatchEvent(new listUpdateEvent());
         }
     }
 

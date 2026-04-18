@@ -2,8 +2,9 @@ import "./Player.css";
 import {useEffect, useRef} from "react";
 import VideoControls from "./controls/VideoControls.jsx";
 import SubtitleHider from "./SubtitleHider.jsx";
+import {almostFinishedEvent, playNextEvent} from "./playerEvents.js";
 
-function Player({videoLink, playNext}) {
+function Player({videoLink, watchPageRef}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
@@ -48,19 +49,17 @@ function Player({videoLink, playNext}) {
     }, [videoLink]);
 
     // play next episode when the current one ends
-    useEffect(() => {
+    function endedHandler() {
+        watchPageRef.current.dispatchEvent(new playNextEvent());
+    }
+
+    function timeUpdateHandler() {
         const curVideo = videoRef.current;
 
-        function endedHandler() {
-            playNext();
+        if (curVideo.currentTime >= curVideo.duration * 80 / 100) {
+            watchPageRef.current.dispatchEvent(new almostFinishedEvent());
         }
-
-        curVideo.addEventListener("ended", endedHandler);
-
-        return () => {
-            curVideo.removeEventListener("ended", endedHandler);
-        };
-    }, [playNext]);
+    }
 
     return (
         <figure id={"player"}
@@ -73,6 +72,8 @@ function Player({videoLink, playNext}) {
                     src={videoLink}
                     ref={videoRef}
                     disableRemotePlayback
+                    onEnded={endedHandler}
+                    onTimeUpdate={timeUpdateHandler}
                 >
                 </video>
 

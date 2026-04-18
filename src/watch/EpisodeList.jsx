@@ -1,12 +1,18 @@
 import "./EpisodeList.css";
+import {useParams} from "react-router";
+import {playNumberEvent} from "./player/playerEvents.js";
 
-function EpisodeList({count, selected, select}) {
+function EpisodeList({count, watchPageRef}) {
+    const {episode} = useParams();
+
     function makeItem(i) {
+        function clickHandler() {
+            watchPageRef.current.dispatchEvent(new playNumberEvent(i));
+        }
+
         return (
-            <button className={"list-entry" + (i === selected ? " selected" : "")}
-                    onClick={() => {
-                        select(i);
-                    }}
+            <button className={"list-entry" + (i === parseInt(episode) ? " selected" : "")}
+                    onClick={clickHandler}
                     key={i}
             >
                 Episode {i}
