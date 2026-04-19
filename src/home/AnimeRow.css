@@ -5,8 +5,12 @@
 
     .anime-row-title {
         text-align: center;
-        background-color: var(--highlight-d1);
-        font-size: 3rem;
+        background-color: var(--black-l1);
+        color: var(--highlight-d1);
+        font-size: 2.5rem;
+        border-style: dotted;
+        border-width: 5px;
+        border-color: var(--highlight-d1);
     }
 
     .anime-row-items {
@@ -26,6 +30,6 @@
         overflow-x: auto;
         flex-wrap: nowrap;
         scrollbar-width: auto;
-        scrollbar-color: var(--highlight-d1) var(--black-l1);
+        scrollbar-color: var(--highlight-l1) var(--black-l1);
     }
 }

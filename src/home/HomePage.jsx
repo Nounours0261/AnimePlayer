@@ -58,16 +58,16 @@ function HomePage() {
         <div id={"home-page"}
              ref={homePageRef}
         >
-            <AnimeRow paths={latest}
-                      oneLine={true}
-                      title={"Latest"}
-                      homePageRef={homePageRef}
-            />
-            <AnimeRow paths={seasonal}
-                      oneLine={true}
-                      title={"Seasonal"}
-                      homePageRef={homePageRef}
-            />
+            {latest.length !== 0 ? <AnimeRow paths={latest}
+                                             oneLine={true}
+                                             title={"Latest"}
+                                             homePageRef={homePageRef}
+            /> : null}
+            {seasonal.length !== 0 ? <AnimeRow paths={seasonal}
+                                               oneLine={true}
+                                               title={"Seasonal"}
+                                               homePageRef={homePageRef}
+            /> : null}
             <AnimeRow paths={animeList}
                       oneLine={false}
                       title={"All"}

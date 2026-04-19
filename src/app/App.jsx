@@ -6,8 +6,8 @@ import Header from "./Header.jsx";
 function App() {
     return (
         <>
-            <Header/>
             <BrowserRouter>
+                <Header/>
                 <Routes>
                     <Route path={"/home"}
                            element={<HomePage/>}

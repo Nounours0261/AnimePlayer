@@ -1,24 +1,29 @@
 import "./Header.css";
+import {NavLink} from "react-router";
 
 function Header() {
     return (<>
         <div id={"header"}
         >
-            <img src={"/player-bear.png"}
-                 alt={"Website logo"}
-                 height={50}
-                 width={"auto"}
-            />
-            <div id={"header-title-holder"}
+            <NavLink to={"/home"}
+                     id={"home-text"}
             >
-                <h1 id={"header-title"}
+                <img src={"/player-bear.png"}
+                     alt={"Website logo"}
+                     height={50}
+                     width={"auto"}
+                />
+                <div id={"header-title-holder"}
                 >
-                    AnimePlayer
-                </h1>
-                <p id={"header-subtitle"}
-                >by Nours
-                </p>
-            </div>
+                    <h1 id={"header-title"}
+                    >
+                        AnimePlayer
+                    </h1>
+                    <p id={"header-subtitle"}
+                    >by Nours
+                    </p>
+                </div>
+            </NavLink>
         </div>
     </>);
 }

@@ -1,24 +1,30 @@
 #header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: var(--highlight);
-    padding: 10px 20px;
-    gap: 10px;
-    margin: 0 0 10px 0;
 
-    #header-title-holder {
+    #home-text {
         display: flex;
         flex-direction: row;
-        align-items: end;
+        align-items: center;
+        background-color: var(--highlight);
+        padding: 10px 20px;
         gap: 10px;
+        margin: 0 0 10px 0;
 
-        #header-title {
-            margin: 0;
-        }
+        color: black;
+        text-decoration: none;
 
-        #header-subtitle {
-            margin: 0;
+        #header-title-holder {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            gap: 10px;
+
+            #header-title {
+                margin: 0;
+            }
+
+            #header-subtitle {
+                margin: 0;
+            }
         }
     }
 }
