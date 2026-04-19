@@ -1,3 +1,22 @@
+:root {
+    --highlight-l2: #fef7a2;
+    --highlight-l1: #fce05b;
+    --highlight: #f9cc00;
+    --highlight-d1: #f8b400;
+    --highlight-d2: #f59e00;
+    --highlight-d3: #f18200;
+
+    --black-l4: #808080;
+    --black-l3: #606060;
+    --black-l2: #404040;
+    --black-l1: #2a2a2a;
+    --black: #000000;
+}
+
 body {
     margin: 0;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: var(--black);
 }

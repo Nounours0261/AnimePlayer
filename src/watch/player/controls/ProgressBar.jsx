@@ -92,7 +92,7 @@ function ProgressBar({videoRef}) {
         progressRef.current.blur();
     }
 
-    return (
+    return (<>
         <div id={"progress-holder"}
         >
             <span>
@@ -107,7 +107,7 @@ function ProgressBar({videoRef}) {
                    onInput={inputHandler}
             />
         </div>
-    );
+    </>);
 }
 
 export default ProgressBar;

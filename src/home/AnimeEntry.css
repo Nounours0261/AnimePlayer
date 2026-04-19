@@ -1,30 +1,51 @@
 .anime-entry {
-    width: fit-content;
-    height: fit-content;
+    width: 230px;
+    height: 325px;
+
     position: relative;
     display: flex;
     flex-direction: row;
+    flex-shrink: 0;
 
     .left-side {
-        width: 230px;
-        height: 325px;
         position: relative;
 
         .poster {
-            width: 230px;
-            height: 325px;
+            width: 100%;
+            height: 100%;
             display: block;
-            background-color: magenta;
+            background-color: var(--black);
         }
 
         .title {
             position: absolute;
             width: 100%;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.3);
-            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--highlight-l2);
+            font-size: 1.2rem;
+            text-align: center;
         }
 
+        .button-holder {
+            display: none;
+        }
+
+        .info-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .right-side {
+        display: none;
+        flex-direction: column;
+    }
+}
+
+.anime-entry:hover {
+    .left-side {
         .button-holder {
             width: 100%;
             height: 30%;
@@ -36,23 +57,20 @@
             justify-content: space-evenly;
             align-items: center;
         }
-
-        .info-button {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
     }
+}
+
+.anime-entry.detailed {
+    border-radius: 15px;
+    overflow: hidden;
+
+    width: fit-content;
+    gap: 10px;
+
+    background-color: var(--highlight-l1);
+
 
     .right-side {
-        flex-direction: column;
-    }
-
-    .right-side.shown {
         display: flex;
-    }
-
-    .right-side.hidden {
-        display: none;
     }
 }

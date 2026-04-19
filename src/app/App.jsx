@@ -1,12 +1,12 @@
-import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import HomePage from "../home/HomePage.jsx";
 import WatchPage from "../watch/WatchPage.jsx";
+import Header from "./Header.jsx";
 
 function App() {
-
     return (
         <>
+            <Header/>
             <BrowserRouter>
                 <Routes>
                     <Route path={"/home"}

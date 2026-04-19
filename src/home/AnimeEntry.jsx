@@ -86,64 +86,64 @@ function AnimeEntry({path, homePageRef}) {
         }
     }
 
-    return (<div className={"anime-entry"}
-    >
-        <div className={"left-side"}
+    return (<>
+        <div className={`anime-entry ${detailed ? "detailed" : ""}`}
         >
-            <img src={info.cover}
-                 alt={"anime cover"}
-                 className={"poster"}
-                 onError={clearCover}
-                 width={"230px"}
-                 height={"325px"}
-            />
-            <button className={"info-button"}
-                    onClick={infoButtonClick}
+            <div className={"left-side"}
             >
-                i
-            </button>
-            <div className={"title"}
-            >
-                {info.title}
-            </div>
-            <div className={"button-holder"}
-            >
-                <NavLink to={`/watch/${path}/1`}
-                >
-                    First
-                </NavLink>
-                <NavLink to={`${nextLink}`}
-                >
-                    Latest
-                </NavLink>
-            </div>
-        </div>
-        <form className={`right-side ${detailed ? "shown" : "hidden"}`}
-              onSubmit={infoFormSubmit}
-        >
-            <label>
-                <input type={"checkbox"}
-                       ref={seasonalRef}
-                       name={"seasonal"}
-                       value={"yes"}
+                <img src={info.cover}
+                     alt={"anime cover"}
+                     className={"poster"}
+                     onError={clearCover}
                 />
-                Seasonal
-            </label>
-            <div>
-                Total episodes : {info.episodes.length}
+                <button className={"info-button"}
+                        onClick={infoButtonClick}
+                >
+                    i
+                </button>
+                <div className={"title"}
+                >
+                    {info.title}
+                </div>
+                <div className={"button-holder"}
+                >
+                    <NavLink to={`/watch/${path}/1`}
+                    >
+                        First
+                    </NavLink>
+                    <NavLink to={`${nextLink}`}
+                    >
+                        Latest
+                    </NavLink>
+                </div>
             </div>
-            <label>
-                Next episode : <input type={"number"}
-                                      ref={nextEpRef}
-                                      name={"nextEp"}
-            />
-            </label>
-            <button type={"submit"}
+            <form className={`right-side`}
+                  onSubmit={infoFormSubmit}
             >
-                Save
-            </button>
-        </form>
-    </div>);
+                <label>
+                    <input type={"checkbox"}
+                           ref={seasonalRef}
+                           name={"seasonal"}
+                           value={"yes"}
+                    />
+                    Seasonal
+                </label>
+                <div>
+                    Total episodes : {info.episodes.length}
+                </div>
+                <label>
+                    Next episode : <input type={"number"}
+                                          ref={nextEpRef}
+                                          name={"nextEp"}
+                />
+                </label>
+                <button type={"submit"}
+                >
+                    Save
+                </button>
+            </form>
+        </div>
+    </>);
 }
 
 export default AnimeEntry;

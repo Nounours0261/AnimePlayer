@@ -1,10 +1,11 @@
 .anime-row {
-    width: 100%;
+    display: flex;
     flex-direction: column;
+    width: 100%;
 
     .anime-row-title {
         text-align: center;
-        background-color: crimson;
+        background-color: var(--highlight-d1);
         font-size: 3rem;
     }
 
@@ -16,7 +17,7 @@
         justify-content: safe center;
         gap: 20px;
         padding: 20px 20px;
-        background-color: mediumpurple;
+        background-color: var(--black-l2);
     }
 }
 
@@ -24,5 +25,7 @@
     .anime-row-items {
         overflow-x: auto;
         flex-wrap: nowrap;
+        scrollbar-width: auto;
+        scrollbar-color: var(--highlight-d1) var(--black-l1);
     }
 }

@@ -51,16 +51,16 @@ function VolumeBar({videoRef}) {
         changeVideoVolume(e.target.value);
     }
 
-    return (
-        <input id={"volume"}
-               type={"range"}
-               min={0}
-               max={100}
-               value={volume}
-               onInput={inputHandler}
-        >
+    return (<>
+            <input id={"volume"}
+                   type={"range"}
+                   min={0}
+                   max={100}
+                   value={volume}
+                   onInput={inputHandler}
+            >
 
-        </input>
+            </input></>
     );
 }
 

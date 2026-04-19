@@ -61,7 +61,7 @@ function Player({videoLink, watchPageRef}) {
         }
     }
 
-    return (
+    return (<>
         <figure id={"player"}
                 ref={playerRef}
         >
@@ -83,7 +83,8 @@ function Player({videoLink, watchPageRef}) {
 
             <VideoControls videoRef={videoRef}
                            playerRef={playerRef}/>
-        </figure>);
+        </figure>
+    </>);
 }
 
 export default Player;

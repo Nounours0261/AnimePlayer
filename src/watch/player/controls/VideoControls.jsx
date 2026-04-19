@@ -38,26 +38,28 @@ function VideoControls({videoRef, playerRef}) {
         };
     }, []);
 
-    return (<div id="video-controls"
-                 ref={controlsRef}
-                 className={shown ? "shown" : "hidden"}
-    >
-        <PlayPauseButton videoRef={videoRef}
-        />
+    return (<>
+        <div id="video-controls"
+             ref={controlsRef}
+             className={shown ? "shown" : "hidden"}
+        >
+            <PlayPauseButton videoRef={videoRef}
+            />
 
-        <ProgressBar videoRef={videoRef}
-        />
+            <ProgressBar videoRef={videoRef}
+            />
 
-        <VolumeBar videoRef={videoRef}
-        />
+            <VolumeBar videoRef={videoRef}
+            />
 
-        <SkipRewind videoRef={videoRef}
-                    showControls={showControls}
-        />
+            <SkipRewind videoRef={videoRef}
+                        showControls={showControls}
+            />
 
-        <FullscreenButton playerRef={playerRef}
-        />
-    </div>);
+            <FullscreenButton playerRef={playerRef}
+            />
+        </div>
+    </>);
 }
 
 export default VideoControls;

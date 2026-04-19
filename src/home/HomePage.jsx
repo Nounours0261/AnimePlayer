@@ -54,25 +54,27 @@ function HomePage() {
 
     }, [animeList]);
 
-    return (<div id={"anime-list"}
-                 ref={homePageRef}
-    >
-        <AnimeRow paths={latest}
-                  oneLine={true}
-                  title={"Latest"}
-                  homePageRef={homePageRef}
-        />
-        <AnimeRow paths={seasonal}
-                  oneLine={true}
-                  title={"Seasonal"}
-                  homePageRef={homePageRef}
-        />
-        <AnimeRow paths={animeList}
-                  oneLine={false}
-                  title={"All"}
-                  homePageRef={homePageRef}
-        />
-    </div>);
+    return (<>
+        <div id={"home-page"}
+             ref={homePageRef}
+        >
+            <AnimeRow paths={latest}
+                      oneLine={true}
+                      title={"Latest"}
+                      homePageRef={homePageRef}
+            />
+            <AnimeRow paths={seasonal}
+                      oneLine={true}
+                      title={"Seasonal"}
+                      homePageRef={homePageRef}
+            />
+            <AnimeRow paths={animeList}
+                      oneLine={false}
+                      title={"All"}
+                      homePageRef={homePageRef}
+            />
+        </div>
+    </>);
 }
 
 export default HomePage;

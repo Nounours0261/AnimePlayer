@@ -37,12 +37,14 @@ function FullscreenButton({playerRef}) {
         };
     }, [isFull, setIsFull, swapFullscreen]);
 
-    return <button id={"fullscreen"}
-                   type={"button"}
-                   onClick={swapFullscreen}
-    >
-        Fullscreen
-    </button>;
+    return (<>
+        <button id={"fullscreen"}
+                type={"button"}
+                onClick={swapFullscreen}
+        >
+            Fullscreen
+        </button>
+    </>);
 }
 
 export default FullscreenButton;

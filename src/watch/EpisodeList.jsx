@@ -20,15 +20,16 @@ function EpisodeList({count, watchPageRef}) {
         );
     }
 
-    return (
-        <div className={"episode-list"}
-        >
-            {
-                [...Array(count).keys()].map((i) => {
-                    return makeItem(i + 1);
-                })
-            }
-        </div>
+    return (<>
+            <div className={"episode-list"}
+            >
+                {
+                    [...Array(count).keys()].map((i) => {
+                        return makeItem(i + 1);
+                    })
+                }
+            </div>
+        </>
     );
 }
 

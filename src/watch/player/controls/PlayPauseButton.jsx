@@ -47,15 +47,17 @@ function PlayPauseButton({videoRef}) {
         };
     }, [playPause, videoRef]);
 
-    return <button id={"play-pause"}
-                   type={"button"}
-                   onClick={() => {
-                       playPause();
-                       document.querySelector("#play-pause").blur();
-                   }}
-    >
-        Play/Pause
-    </button>;
+    return (<>
+        <button id={"play-pause"}
+                type={"button"}
+                onClick={() => {
+                    playPause();
+                    document.querySelector("#play-pause").blur();
+                }}
+        >
+            Play/Pause
+        </button>
+    </>);
 }
 
 export default PlayPauseButton;

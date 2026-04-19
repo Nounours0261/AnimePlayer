@@ -2,6 +2,11 @@
     flex-direction: row;
     align-items: center;
 
+    background-color: rgba(0, 50, 200, 0.1);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
     #progress-holder {
         width: 60%;
         display: inline-flex;

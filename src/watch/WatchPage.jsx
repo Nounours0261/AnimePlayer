@@ -110,24 +110,26 @@ function WatchPage() {
         };
     }, [anime, changeEpisode, episode]);
 
-    return (<div id={"container"}
-                 ref={watchPageRef}>
-        <EpisodeList count={(animeInfo.episodes ?? []).length}
-                     watchPageRef={watchPageRef}
-        />
+    return (<>
+        <div id={"container"}
+             ref={watchPageRef}>
+            <EpisodeList count={(animeInfo.episodes ?? []).length}
+                         watchPageRef={watchPageRef}
+            />
 
-        <Player videoLink={link}
-                watchPageRef={watchPageRef}
-        />
+            <Player videoLink={link}
+                    watchPageRef={watchPageRef}
+            />
 
-        <div>
-            {anime}, {episode}
+            <div>
+                {anime}, {episode}
+            </div>
+            <NavLink to={"/home"}
+            >
+                Home
+            </NavLink>
         </div>
-        <NavLink to={"/home"}
-        >
-            Home
-        </NavLink>
-    </div>);
+    </>);
 }
 
 export default WatchPage;
