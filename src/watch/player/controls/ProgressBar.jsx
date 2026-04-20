@@ -1,15 +1,14 @@
 import {useEffect, useMemo, useRef, useState} from "react";
 import "./ProgressBar.css";
 
-
 function ProgressBar({videoRef}) {
     const progressRef = useRef(null);
     const [videoProgress, setVideoProgress] = useState(0);
     const [videoLength, setVideoLength] = useState(0);
     const isMoving = useRef(false);
+    const [timeMode, setTimeMode] = useState(localStorage.getItem("time-mode"));
 
     // video event handlers for setting state
-    // bar click handler for time changing
     useEffect(() => {
         const curVideo = videoRef.current;
 
@@ -74,8 +73,12 @@ function ProgressBar({videoRef}) {
     }, [videoRef]);
 
     function formatTime() {
-        const floored = Math.floor(videoProgress);
-        const totalMins = Math.floor(floored / 60);
+        let floored = Math.floor(videoProgress);
+        if (timeMode === "countdown") {
+            console.log(Math.floor(videoLength), Math.floor(videoProgress));
+            floored = Math.floor(videoLength) - floored;
+        }
+        let totalMins = Math.floor(floored / 60);
 
         const secs = floored % 60;
         const mins = totalMins % 60;
@@ -84,20 +87,28 @@ function ProgressBar({videoRef}) {
         const secString = `${secs < 10 ? "0" : ""}${secs}`;
         const minString = `${mins < 10 ? "0" : ""}${totalMins}`;
         const hourString = hours > 0 ? `${hours}:` : "";
-        return `${hourString}${minString}:${secString}`;
+        return `${timeMode === "countdown" ? "-" : ""}${hourString}${minString}:${secString}`;
     }
 
+    // bar click handler for time changing
     function inputHandler(e) {
         setVideoProgress(e.target.value);
         changeVideoTime(e.target.value);
         progressRef.current.blur();
     }
 
+    function timeModeHandler() {
+        setTimeMode(timeMode === "countdown" ? "default" : "countdown");
+    }
+
     return (<>
         <div id={"progress-holder"}
              className={"bar"}
         >
-            <button id={"time-info"}>
+            <button id={"time-info"}
+                    onClick={timeModeHandler}
+                    title={"Swap display"}
+            >
                 <div>
                     <p>{formatTime()}</p>
                 </div>

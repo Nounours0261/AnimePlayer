@@ -3,10 +3,12 @@ import "./VolumeBar.css";
 
 function VolumeBar({videoRef}) {
     const [volume, setVolume] = useState(parseInt(localStorage.getItem("volume") ?? 100));
+    const [muted, setMuted] = useState(localStorage.getItem("muted") === "true");
 
     // Set initial volume
     useEffect(() => {
         videoRef.current.volume = parseInt(localStorage.getItem("volume") ?? 100) / 100;
+        videoRef.current.muted = localStorage.getItem("muted") === "true";
     }, [videoRef]);
 
     // throttled function to change the video volume
@@ -32,6 +34,9 @@ function VolumeBar({videoRef}) {
                     if (savedValue !== null) {
                         curVideo.volume = savedValue / 100;
                         localStorage.setItem("volume", `${savedValue}`);
+                        curVideo.muted = false;
+                        setMuted(false);
+                        localStorage.setItem("muted", `false`);
                         savedValue = null;
                     } else {
                         clearInterval(interval);
@@ -52,10 +57,19 @@ function VolumeBar({videoRef}) {
         changeVideoVolume(e.target.value);
     }
 
+    function muteHandler() {
+        videoRef.current.muted = !muted;
+        setMuted(!muted);
+        localStorage.setItem("muted", `${!muted}`);
+    }
+
     return (<div id={"volume-holder"}
                  className={"bar"}
         >
-            <button id={"mute-button"}>
+            <button id={"mute-button"}
+                    onClick={muteHandler}
+                    title={"Mute"}
+            >
                 <svg id={"volume-icon"}
                      viewBox="0 0 32 32"
                 >
@@ -66,6 +80,11 @@ function VolumeBar({videoRef}) {
                         S29.439,8.227,26.606,5.394z M22.363,9.636c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.047,0,2.828C20.479,13.409,21,14.664,21,16
                         s-0.52,2.591-1.464,3.535c-0.781,0.781-0.781,2.047,0,2.828c0.391,0.391,0.902,0.586,1.414,0.586s1.023-0.195,1.414-0.586
                         C24.064,20.664,25,18.404,25,16S24.063,11.336,22.363,9.636z"/>
+                    {muted ? <path className={"line"}
+                                   d="M4 28 L28 4"
+                                   strokeWidth="5"
+                                   strokeLinecap="round"
+                    /> : null}
                 </svg>
             </button>
             <input id={"volume"}
