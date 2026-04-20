@@ -21,7 +21,7 @@ function EpisodeList({count, watchPageRef}) {
     }
 
     return (<>
-            <div className={"episode-list"}
+            <div className={`episode-list ${count > 6 ? "tall" : "short"}`}
             >
                 {
                     [...Array(count).keys()].map((i) => {

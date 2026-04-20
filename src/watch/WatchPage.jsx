@@ -117,10 +117,20 @@ function WatchPage() {
             <EpisodeList count={(animeInfo.episodes ?? []).length}
                          watchPageRef={watchPageRef}
             />
-
-            <Player videoLink={link}
-                    watchPageRef={watchPageRef}
-            />
+            <div id={"player-holder"}
+            >
+                <Player videoLink={link}
+                        watchPageRef={watchPageRef}
+                />
+            </div>
+            <div id={"anime-info"}
+            >
+                <img src={animeInfo.cover}
+                     alt={"anime cover"}
+                     id={"side-cover"}
+                />
+                {animeInfo.title}
+            </div>
         </div>
     </>);
 }

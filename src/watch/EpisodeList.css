@@ -6,20 +6,27 @@
     flex-shrink: 0;
     scrollbar-color: var(--highlight-d1) var(--black);
     scrollbar-gutter: stable;
+    gap: 5px;
+    width: 15%;
+    max-width: 200px;
 
     .list-entry {
+        flex-grow: 1;
         flex-shrink: 0;
-        width: 130px;
-        height: 50px;
+        min-height: 4rem;
+
         padding: 0;
         margin: 0;
         border-style: solid;
+        border-width: 5px;
         border-right-color: var(--black-l2);
         border-bottom-color: var(--black-l2);
         border-left-color: var(--black-l3);
         border-top-color: var(--black-l3);
-        border-width: 5px;
         background-color: var(--black-l4);
+
+        font-size: 1.5rem;
+        cursor: pointer;
     }
 
     .selected {
@@ -29,4 +36,12 @@
         border-left-color: var(--highlight-d2);
         border-top-color: var(--highlight-d2);
     }
+}
+
+.episode-list.tall {
+    justify-content: space-between;
+}
+
+.episode-list.short {
+    height: fit-content;
 }
