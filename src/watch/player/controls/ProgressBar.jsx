@@ -84,7 +84,7 @@ function ProgressBar({videoRef}) {
         const hours = Math.floor(totalMins / 60);
 
         const secString = `${secs < 10 ? "0" : ""}${secs}`;
-        const minString = `${mins < 10 ? "0" : ""}${totalMins}`;
+        const minString = `${mins < 10 ? "0" : ""}${mins}`;
         const hourString = hours > 0 ? `${hours}:` : "";
         return `${timeMode === "countdown" ? "-" : ""}${hourString}${minString}:${secString}`;
     }
