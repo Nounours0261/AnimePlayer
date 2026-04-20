@@ -1,3 +1,32 @@
-.selected {
-    background-color: crimson;
+.episode-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    scrollbar-color: var(--highlight-d1) var(--black);
+    scrollbar-gutter: stable;
+
+    .list-entry {
+        flex-shrink: 0;
+        width: 130px;
+        height: 50px;
+        padding: 0;
+        margin: 0;
+        border-style: solid;
+        border-right-color: var(--black-l2);
+        border-bottom-color: var(--black-l2);
+        border-left-color: var(--black-l3);
+        border-top-color: var(--black-l3);
+        border-width: 5px;
+        background-color: var(--black-l4);
+    }
+
+    .selected {
+        background-color: var(--highlight-d1);
+        border-right-color: var(--highlight-d3);
+        border-bottom-color: var(--highlight-d3);
+        border-left-color: var(--highlight-d2);
+        border-top-color: var(--highlight-d2);
+    }
 }

@@ -1,16 +1,17 @@
 #header {
+    background-color: var(--highlight);
 
     #home-text {
         display: flex;
         flex-direction: row;
         align-items: center;
-        background-color: var(--highlight);
         padding: 10px 20px;
         gap: 10px;
         margin: 0 0 10px 0;
 
         color: black;
         text-decoration: none;
+        width: fit-content;
 
         #header-title-holder {
             display: flex;

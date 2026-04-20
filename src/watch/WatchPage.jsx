@@ -1,9 +1,10 @@
 import Player from "./player/Player.jsx";
-import {NavLink, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useCallback, useEffect, useRef, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";
 import {getAnimeInfo} from "../utils/jsonReader.js";
 import {almostFinishedEvent, playNextEvent, playNumberEvent} from "./player/playerEvents.js";
+import "./WatchPage.css";
 
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});
@@ -111,7 +112,7 @@ function WatchPage() {
     }, [anime, changeEpisode, episode]);
 
     return (<>
-        <div id={"container"}
+        <div id={"watch-page"}
              ref={watchPageRef}>
             <EpisodeList count={(animeInfo.episodes ?? []).length}
                          watchPageRef={watchPageRef}
@@ -120,14 +121,6 @@ function WatchPage() {
             <Player videoLink={link}
                     watchPageRef={watchPageRef}
             />
-
-            <div>
-                {anime}, {episode}
-            </div>
-            <NavLink to={"/home"}
-            >
-                Home
-            </NavLink>
         </div>
     </>);
 }
