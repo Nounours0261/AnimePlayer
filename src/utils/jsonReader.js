@@ -14,10 +14,6 @@ async function getJsonFile(path) {
     }
 }
 
-export async function getAnimeInfo(path) {
-    return getJsonFile(`/anime/${path}/info.json`);
-}
-
 export async function getIndex() {
     return getJsonFile("/anime/index.json");
 }

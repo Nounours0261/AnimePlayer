@@ -1,13 +1,9 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
-import {getAnimeInfo} from "../utils/jsonReader.js";
 import {listUpdateEvent} from "./HomeEvents.js";
 
-function AnimeEntry({path, homePageRef}) {
-    const [info, setInfo] = useState({
-        title: "", episodes: [], cover: "/default-cover.png",
-    });
+function AnimeEntry({info, homePageRef}) {
     const [detailed, setDetailed] = useState(false);
     const [nextLink, setNextLink] = useState("");
     const seasonalRef = useRef(null);
@@ -17,43 +13,17 @@ function AnimeEntry({path, homePageRef}) {
         setDetailed(!detailed);
     }
 
-    const clearCover = useCallback(() => {
-        const newInfo = {
-            ...info,
-        };
-        newInfo.cover = "/default-cover.png";
-        setInfo(newInfo);
-    }, [info, setInfo]);
-
     // load info on creation
     useEffect(() => {
-        let ignore = false;
-        getAnimeInfo(path).then((res) => {
-            if (!ignore) {
-                if (res.ok) {
-                    if (res.cover === null) {
-                        res.cover = "/default-cover.png";
-                    }
-                    setInfo(res);
-                } else {
-                    window.alert(`Failed to get info on '${path}', check console for more info`);
-                }
-            }
-        });
-
-        const browserData = JSON.parse(localStorage.getItem(path) ?? "{}");
+        const browserData = JSON.parse(localStorage.getItem(info.path) ?? "{}");
         const nextEp = browserData.nextEp ?? 1;
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setNextLink(`/watch/${path}/${nextEp}`);
+        setNextLink(`/watch/${info.path}/${nextEp}`);
         nextEpRef.current.value = nextEp;
 
         const seasonalData = JSON.parse(localStorage.getItem("seasonal") ?? "[]");
-        seasonalRef.current.checked = seasonalData.includes(path);
-
-        return () => {
-            ignore = true;
-        };
-    }, [path]);
+        seasonalRef.current.checked = seasonalData.includes(info.path);
+    }, [info]);
 
     function infoFormSubmit(e) {
         e.preventDefault();
@@ -64,19 +34,19 @@ function AnimeEntry({path, homePageRef}) {
         if (!isNaN(nextEpInt) && nextEpInt >= 1 && nextEpInt <= info.episodes.length) {
             const newData = {};
             newData.nextEp = nextEpInt;
-            localStorage.setItem(path, JSON.stringify(newData));
-            setNextLink(`/watch/${path}/${nextEpInt}`);
+            localStorage.setItem(info.path, JSON.stringify(newData));
+            setNextLink(`/watch/${info.path}/${nextEpInt}`);
 
             if (formData.get("seasonal") === "yes") {
                 const seasonalData = JSON.parse(localStorage.getItem("seasonal") ?? "[]");
-                if (!seasonalData.includes(path)) {
-                    seasonalData.push(path);
+                if (!seasonalData.includes(info.path)) {
+                    seasonalData.push(info.path);
                 }
                 localStorage.setItem("seasonal", JSON.stringify(seasonalData));
             } else {
                 const seasonalData = JSON.parse(localStorage.getItem("seasonal") ?? "[]");
                 const newData = seasonalData.filter((p) => {
-                    return p !== path;
+                    return p !== info.path;
                 });
                 localStorage.setItem("seasonal", JSON.stringify(newData));
             }
@@ -93,11 +63,14 @@ function AnimeEntry({path, homePageRef}) {
             >
                 <NavLink to={`${nextLink}`}
                 >
-                    <img src={info.cover}
-                         alt={"anime cover"}
-                         className={"poster"}
-                         onError={clearCover}
-                    />
+                    <picture>
+                        <source srcSet={info.cover}/>
+                        <img src={"/default-cover.png"}
+                             alt={"anime cover"}
+                             className={"poster"}
+                             loading={"lazy"}
+                        />
+                    </picture>
                 </NavLink>
                 <button className={"info-button"}
                         onClick={infoButtonClick}

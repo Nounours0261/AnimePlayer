@@ -2,7 +2,7 @@ import Player from "./player/Player.jsx";
 import {useNavigate, useParams} from "react-router";
 import {useCallback, useEffect, useRef, useState} from "react";
 import EpisodeList from "./EpisodeList.jsx";
-import {getAnimeInfo} from "../utils/jsonReader.js";
+import {getIndex} from "../utils/jsonReader.js";
 import {almostFinishedEvent, playNextEvent, playNumberEvent} from "./player/playerEvents.js";
 import "./WatchPage.css";
 
@@ -31,9 +31,12 @@ function WatchPage() {
     // load data on display
     useEffect(() => {
         let ignore = false;
-        getAnimeInfo(anime).then((info) => {
+        getIndex().then((index) => {
             if (!ignore) {
-                if (info.ok) {
+                if (index.ok) {
+                    const info = index.list.find((e) => {
+                        return e.path === anime;
+                    });
                     setAnimeInfo(info);
                     setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
                 } else {
@@ -125,10 +128,13 @@ function WatchPage() {
             </div>
             <div id={"anime-info"}
             >
-                <img src={animeInfo.cover}
-                     alt={"anime cover"}
-                     id={"side-cover"}
-                />
+                <picture>
+                    <source srcSet={animeInfo.cover}/>
+                    <img src={"/default-cover.png"}
+                         alt={"anime cover"}
+                         id={"side-cover"}
+                    />
+                </picture>
                 {animeInfo.title}
             </div>
         </div>

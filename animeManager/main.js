@@ -8,8 +8,6 @@ import {moveDownloads} from "./moveDownloads.js";
 const animeDir = path.join(process.cwd(), "public", "anime");
 
 async function main() {
-    const files = await fs.readdir(animeDir);
-
     let infoFun = complementInfo;
     if (argv.includes("-f")) {
         console.green("force option was used, all data will be recalculated/fetched");
@@ -23,19 +21,30 @@ async function main() {
 
     console.blue("Updating index");
 
+    const indexPath = path.join(animeDir, "index.json");
+    let indexContents;
+    try {
+        const raw = await fs.readFile(indexPath);
+        const json = await JSON.parse(raw);
+        indexContents = json.list;
+    } catch {
+        indexContents = [];
+    }
+
+    const files = await fs.readdir(animeDir);
     const list = [];
     for (const file of files) {
         const fullPath = path.join(animeDir, file);
         const fileData = await fs.lstat(fullPath);
         if (fileData.isDirectory()) {
-            await infoFun(fullPath);
-            list.push(file);
+            const existingData = indexContents.find((e) => {
+                return e.path === file;
+            }) ?? {};
+            list.push(await infoFun(fullPath, existingData));
         }
     }
 
-    const indexPath = path.join(animeDir, "index.json");
-    const data = {list};
-    await fs.writeFile(indexPath, JSON.stringify(data, null, 2));
+    await fs.writeFile(indexPath, JSON.stringify({list}, null, 2));
 }
 
 main().then(() => {
