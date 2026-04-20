@@ -75,10 +75,9 @@ function ProgressBar({videoRef}) {
     function formatTime() {
         let floored = Math.floor(videoProgress);
         if (timeMode === "countdown") {
-            console.log(Math.floor(videoLength), Math.floor(videoProgress));
             floored = Math.floor(videoLength) - floored;
         }
-        let totalMins = Math.floor(floored / 60);
+        const totalMins = Math.floor(floored / 60);
 
         const secs = floored % 60;
         const mins = totalMins % 60;

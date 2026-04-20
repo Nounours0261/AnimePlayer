@@ -79,10 +79,10 @@ function Player({videoLink, watchPageRef}) {
 
                 <SubtitleHider
                 />
-            </div>
 
-            <VideoControls videoRef={videoRef}
-                           playerRef={playerRef}/>
+                <VideoControls videoRef={videoRef}
+                               playerRef={playerRef}/>
+            </div>
         </figure>
     </>);
 }

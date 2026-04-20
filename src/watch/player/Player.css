@@ -1,13 +1,14 @@
 #player {
-    background-color: crimson;
+    background-color: var(--black);
     width: 100%;
     margin: 0;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     #video-holder {
         position: relative;
-        width: 100%;
-        height: 100%;
 
         video {
             width: 100%;
