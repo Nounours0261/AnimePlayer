@@ -1,28 +1,32 @@
 #video-controls {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 
-    background-color: rgba(0, 50, 200, 0.1);
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: calc(100% - 2 * 3px);
+    padding: 3px;
+    gap: 5px;
 
-    #progress-holder {
-        width: 60%;
+    .single-button {
+        margin: 0;
+        border: 0;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.3);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+    }
+
+    .bar {
         display: inline-flex;
         flex-direction: row;
         align-items: center;
-        gap: 10px;
-
-        #progress {
-            width: stretch;
-            cursor: pointer;
-            accent-color: goldenrod;
-        }
-    }
-
-    #volume {
-        cursor: pointer;
+        padding: 0 8px 0 0;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.3);
     }
 }
 

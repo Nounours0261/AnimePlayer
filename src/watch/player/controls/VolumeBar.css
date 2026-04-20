@@ -1,0 +1,24 @@
+#volume-holder {
+    #mute-button {
+        margin: 0;
+        border: 0;
+        padding: 8px;
+        background-color: rgba(0, 0, 0, 0);
+        cursor: pointer;
+        line-height: 0;
+
+        #volume-icon {
+            height: 20px;
+            width: 20px;
+
+            * {
+                fill: var(--highlight);
+            }
+        }
+    }
+
+    #volume {
+        cursor: pointer;
+        accent-color: var(--highlight);
+    }
+}

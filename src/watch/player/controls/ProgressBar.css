@@ -1,0 +1,33 @@
+#progress-holder {
+    flex-grow: 1;
+
+    #time-info {
+        margin: 0;
+        border: 0;
+        padding: 8px;
+        background-color: rgba(0, 0, 0, 0);
+        cursor: pointer;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20px;
+
+            p {
+                color: var(--highlight);
+                line-height: 0;
+                margin: 0;
+                border: 0;
+                padding: 0;
+            }
+        }
+    }
+
+    #progress {
+        width: stretch;
+        cursor: pointer;
+        accent-color: var(--highlight);
+    }
+}
+

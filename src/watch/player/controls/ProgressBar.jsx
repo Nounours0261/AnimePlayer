@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useRef, useState} from "react";
+import "./ProgressBar.css";
 
 
 function ProgressBar({videoRef}) {
@@ -94,10 +95,13 @@ function ProgressBar({videoRef}) {
 
     return (<>
         <div id={"progress-holder"}
+             className={"bar"}
         >
-            <span>
-                {formatTime()}
-            </span>
+            <button id={"time-info"}>
+                <div>
+                    <p>{formatTime()}</p>
+                </div>
+            </button>
             <input id={"progress"}
                    type={"range"}
                    min={0}

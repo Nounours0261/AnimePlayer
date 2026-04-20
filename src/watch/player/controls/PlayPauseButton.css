@@ -1,0 +1,25 @@
+#play-pause.playing {
+    padding: 8px;
+
+    #pause-icon {
+        height: 20px;
+        width: 20px;
+
+        * {
+            fill: var(--highlight)
+        }
+    }
+}
+
+#play-pause.paused {
+    padding: 8px 7px 8px 9px;
+
+    #play-icon {
+        height: 20px;
+        width: 20px;
+
+        * {
+            fill: var(--highlight)
+        }
+    }
+}
