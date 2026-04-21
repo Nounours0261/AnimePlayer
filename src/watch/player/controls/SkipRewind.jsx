@@ -32,7 +32,7 @@ function SkipRewind({videoRef, showControls}) {
                         interval = null;
                         isWaiting = false;
                     }
-                }, 333);
+                }, 200);
             }
 
             return throttled;
@@ -45,10 +45,10 @@ function SkipRewind({videoRef, showControls}) {
     useEffect(() => {
         function keyHandler(e) {
             if (e.key === "ArrowRight") {
-                changeVideoTime(5);
+                changeVideoTime(e.shiftKey ? 1 / 24 : 5);
             }
             if (e.key === "ArrowLeft") {
-                changeVideoTime(-5);
+                changeVideoTime(e.shiftKey ? -1 / 24 : -5);
             }
             if (e.key === "u") {
                 changeVideoTime(85);
