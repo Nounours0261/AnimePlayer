@@ -52,7 +52,7 @@ function VolumeBar({videoRef}) {
         return wrapper();
     }, [videoRef]);
 
-    function inputHandler(e) {
+    function barHandler(e) {
         setVolume(e.target.value);
         changeVideoVolume(e.target.value);
     }
@@ -92,7 +92,7 @@ function VolumeBar({videoRef}) {
                    min={0}
                    max={100}
                    value={volume}
-                   onInput={inputHandler}
+                   onInput={barHandler}
             >
 
             </input></div>

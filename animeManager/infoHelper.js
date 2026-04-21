@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "path";
 import {getCoverUrl} from "./aniListApi.js";
 
+// Create an info object with directory data
 async function getInfo(directory, getCover = false) {
     const baseName = path.basename(directory);
 
@@ -23,10 +24,12 @@ async function getInfo(directory, getCover = false) {
     };
 }
 
+// Overwrite old data
 export async function overWriteInfo(directory) {
     return getInfo(directory, true);
 }
 
+// Keep old data unless it is missing elements
 export async function complementInfo(directory, oldData) {
     const calcData = await getInfo(directory, oldData.cover === null || oldData.cover === undefined);
     const missingEpisodes = calcData.episodes.filter((episode) => {

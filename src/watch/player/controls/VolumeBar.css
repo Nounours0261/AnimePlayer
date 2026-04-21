@@ -24,5 +24,6 @@
     #volume {
         cursor: pointer;
         accent-color: var(--highlight);
+        padding: 5px 0;
     }
 }

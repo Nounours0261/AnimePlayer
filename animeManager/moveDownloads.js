@@ -3,7 +3,8 @@ import "./consoleHelpers.js";
 import fs from "node:fs/promises";
 import readline from 'readline';
 
-async function checkPath(input) {
+// Check that path exists and is a directory
+async function checkDirectory(input) {
     try {
         let sanitized = input.trim();
         if (sanitized[0] === '~') {
@@ -20,64 +21,65 @@ async function checkPath(input) {
     }
 }
 
-async function promptDownloadFolder() {
+// Ask the user for their download directory
+async function promptDownloadDirectory() {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
     });
 
     let answer = await new Promise(resolve => {
-        rl.question("What is your download folder ? I will look for anime in [folder]/anime/*.\n", resolve);
+        rl.question("What is your download directory ? I will look for anime in [directory]/anime/*.\n", resolve);
     });
 
-    while (await checkPath(answer) === null) {
+    while (await checkDirectory(answer) === null) {
         answer = await new Promise(resolve => {
-            rl.question(`'${answer}' could not be found, or isn't a directory. Please try another folder.\n`, resolve);
+            rl.question(`'${answer}' could not be found, or isn't a directory. Please try another directory.\n`, resolve);
         });
     }
 
-    const downloadFolder = await checkPath(answer);
+    const downloadDirectory = await checkDirectory(answer);
 
     const shouldSave = await new Promise(resolve => {
-        rl.question(`Do you want to save '${downloadFolder}' as the default ? (yes/no)\n`, resolve);
+        rl.question(`Do you want to save '${downloadDirectory}' as the default ? (yes/no)\n`, resolve);
     });
     rl.close();
 
     if (["yes", "y"].includes(shouldSave)) {
-        await fs.writeFile(configPath, JSON.stringify({downloadFolder}, null, 2));
+        await fs.writeFile(configPath, JSON.stringify({downloadDirectory}, null, 2));
     }
 
-    return downloadFolder;
+    return downloadDirectory;
 }
 
-
 const configPath = path.join(process.cwd(), "animeManager", "config.json");
-const animeDir = path.join(process.cwd(), "public", "anime");
+const publicAnimeDirectory = path.join(process.cwd(), "public", "anime");
 
+// Check and move any anime downloads
 export async function moveDownloads() {
-    let downloadFolder;
+    let downloadDirectory;
     try {
         const contents = await fs.readFile(configPath);
         const oldData = JSON.parse(contents);
-        downloadFolder = oldData.downloadFolder;
-        if (typeof downloadFolder !== "string") {
-            downloadFolder = await promptDownloadFolder();
+        downloadDirectory = oldData.downloadDirectory;
+        if (typeof downloadDirectory !== "string") {
+            downloadDirectory = await promptDownloadDirectory();
         }
     } catch {
-        downloadFolder = await promptDownloadFolder();
+        downloadDirectory = await promptDownloadDirectory();
     }
 
-    console.blue(`Checking for new downloads in ${downloadFolder}`);
+    console.blue(`Checking for new downloads in ${downloadDirectory}`);
 
-    const animeFolder = path.join(downloadFolder, "anime");
-    if (await checkPath(animeFolder) === null) {
-        console.warn("Could not find an anime folder in your downloads");
+    const downloadAnimeDirectory = path.join(downloadDirectory, "anime");
+    if (await checkDirectory(downloadAnimeDirectory) === null) {
+        console.warn("Could not find an anime directory in your downloads");
         return;
     }
 
-    const contents = await fs.readdir(animeFolder);
+    const contents = await fs.readdir(downloadAnimeDirectory);
     for (const f of contents) {
-        const downloadName = path.join(animeFolder, f);
+        const downloadName = path.join(downloadAnimeDirectory, f);
         try {
             const stat = await fs.lstat(downloadName);
             if (!stat.isDirectory()) {
@@ -87,7 +89,7 @@ export async function moveDownloads() {
             continue;
         }
 
-        const publicName = path.join(animeDir, f);
+        const publicName = path.join(publicAnimeDirectory, f);
         let exists = true;
         try {
             await fs.lstat(publicName);

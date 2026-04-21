@@ -43,7 +43,7 @@ function HomePage() {
         };
     }, []);
 
-
+    // Add listener for list data updates
     useEffect(() => {
         const curPage = homePageRef.current;
 

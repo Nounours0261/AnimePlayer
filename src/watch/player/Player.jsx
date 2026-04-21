@@ -11,6 +11,7 @@ function Player({videoLink, watchPageRef}) {
     const hideMouseTimeout = useRef(0);
 
     // hide mouse when inactive
+    // blur elements when clicked
     useEffect(() => {
         function moveHandler() {
             videoHolderRef.current.style.cursor = "auto";

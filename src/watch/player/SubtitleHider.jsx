@@ -21,13 +21,10 @@ function SubtitleHider() {
     }, [showHider]);
 
     return (<>
-            <div id={"subtitle-hider"}
-                 className={showHider ? "shown" : "hidden"}
-            >
-
-            </div>
-        </>
-    );
+        <div id={"subtitle-hider"}
+             className={showHider ? "shown" : "hidden"}
+        ></div>
+    </>);
 }
 
 export default SubtitleHider;

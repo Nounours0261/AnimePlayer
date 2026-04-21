@@ -25,6 +25,7 @@ function AnimeEntry({info, homePageRef}) {
         seasonalRef.current.checked = seasonalData.includes(info.path);
     }, [info]);
 
+    // Check and save user-controlled anime data
     function infoFormSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);

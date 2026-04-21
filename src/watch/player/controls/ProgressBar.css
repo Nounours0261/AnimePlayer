@@ -27,6 +27,7 @@
     #progress {
         width: stretch;
         cursor: pointer;
+        padding: 5px 0;
         accent-color: var(--highlight);
     }
 }

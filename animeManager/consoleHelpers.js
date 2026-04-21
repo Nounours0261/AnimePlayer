@@ -1,3 +1,5 @@
+// Adapt console to work with terminal
+
 const defaultWarn = console.warn;
 console.warn = (...args) => {
     defaultWarn("\x1b[33m[WARN]");

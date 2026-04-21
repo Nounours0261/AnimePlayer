@@ -5,7 +5,7 @@ import {argv} from 'node:process';
 import "./consoleHelpers.js";
 import {moveDownloads} from "./moveDownloads.js";
 
-const animeDir = path.join(process.cwd(), "public", "anime");
+const animeDirectory = path.join(process.cwd(), "public", "anime");
 
 async function main() {
     let infoFun = complementInfo;
@@ -21,7 +21,7 @@ async function main() {
 
     console.blue("Updating index");
 
-    const indexPath = path.join(animeDir, "index.json");
+    const indexPath = path.join(animeDirectory, "index.json");
     let indexContents;
     try {
         const raw = await fs.readFile(indexPath);
@@ -31,10 +31,10 @@ async function main() {
         indexContents = [];
     }
 
-    const files = await fs.readdir(animeDir);
+    const files = await fs.readdir(animeDirectory);
     const list = [];
     for (const file of files) {
-        const fullPath = path.join(animeDir, file);
+        const fullPath = path.join(animeDirectory, file);
         const fileData = await fs.lstat(fullPath);
         if (fileData.isDirectory()) {
             const existingData = indexContents.find((e) => {

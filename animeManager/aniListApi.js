@@ -1,3 +1,4 @@
+// fetch cover URL from AniList with error handling and 429 checking
 export async function getCoverUrl(title) {
     const query = `
 query ($title: String) {
@@ -13,18 +14,13 @@ query ($title: String) {
         title,
     };
 
-    const url = 'https://graphql.anilist.co',
-        options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                query: query,
-                variables: variables,
-            }),
-        };
+    const url = 'https://graphql.anilist.co', options = {
+        method: 'POST', headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json',
+        }, body: JSON.stringify({
+            query, variables,
+        }),
+    };
 
     console.log(`Fetching cover for '${title}'`);
     const res = await fetch(url, options);

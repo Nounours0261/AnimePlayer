@@ -63,7 +63,7 @@ function ProgressBar({videoRef}) {
                         isWaiting = false;
                         isMoving.current = false;
                     }
-                }, 50);
+                }, 200);
             }
 
             return throttled;
@@ -89,8 +89,7 @@ function ProgressBar({videoRef}) {
         return `${timeMode === "countdown" ? "-" : ""}${hourString}${minString}:${secString}`;
     }
 
-    // bar click handler for time changing
-    function inputHandler(e) {
+    function barHandler(e) {
         setVideoProgress(e.target.value);
         changeVideoTime(e.target.value);
     }
@@ -117,7 +116,7 @@ function ProgressBar({videoRef}) {
                    max={videoLength}
                    value={videoProgress}
                    ref={progressRef}
-                   onInput={inputHandler}
+                   onInput={barHandler}
             />
         </div>
     </>);
