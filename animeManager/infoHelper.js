@@ -28,7 +28,7 @@ export async function overWriteInfo(directory) {
 }
 
 export async function complementInfo(directory, oldData) {
-    const calcData = await getInfo(directory, oldData.cover === null);
+    const calcData = await getInfo(directory, oldData.cover === null || oldData.cover === undefined);
     const missingEpisodes = calcData.episodes.filter((episode) => {
         return !((oldData.episodes ?? []).includes(episode));
     });

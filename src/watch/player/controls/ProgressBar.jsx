@@ -93,7 +93,6 @@ function ProgressBar({videoRef}) {
     function inputHandler(e) {
         setVideoProgress(e.target.value);
         changeVideoTime(e.target.value);
-        progressRef.current.blur();
     }
 
     function timeModeHandler() {

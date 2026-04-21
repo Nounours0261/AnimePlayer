@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import "./PlayPauseButton.css";
 
-
 function PlayPauseButton({videoRef}) {
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -51,10 +50,7 @@ function PlayPauseButton({videoRef}) {
     return (<>
         <button id={"play-pause"}
                 type={"button"}
-                onClick={() => {
-                    playPause();
-                    document.querySelector("#play-pause").blur();
-                }}
+                onClick={playPause}
                 className={`single-button ${isPlaying ? "playing" : "paused"}`}
                 title={isPlaying ? "Pause" : "Play"}
         >

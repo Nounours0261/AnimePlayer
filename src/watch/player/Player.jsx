@@ -27,13 +27,19 @@ function Player({videoLink, watchPageRef}) {
             }
         }
 
+        function superBlur() {
+            document.activeElement.blur();
+        }
+
         window.addEventListener("mousemove", moveHandler);
+        window.addEventListener("click", superBlur);
 
         return () => {
             window.removeEventListener("mousemove", moveHandler);
             if (hideMouseTimeout.current !== 0) {
                 clearTimeout(hideMouseTimeout.current);
             }
+            window.removeEventListener("click", superBlur);
         };
     }, []);
 
