@@ -12,6 +12,7 @@ function WatchPage() {
     const {anime, episode} = useParams();
     const navigate = useNavigate();
     const watchPageRef = useRef(null);
+    const [coverSource, setCoverSource] = useState("/default-cover.png");
 
     const changeEpisode = useCallback((number) => {
         if (number > animeInfo.episodes.length) {
@@ -37,6 +38,7 @@ function WatchPage() {
                 });
                 setAnimeInfo(info);
                 setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
+                setCoverSource(info.cover);
             }
         });
         return () => {
@@ -109,6 +111,10 @@ function WatchPage() {
         };
     }, [anime, changeEpisode, episode]);
 
+    function coverErrorHandler() {
+        setCoverSource("/default-cover.png");
+    }
+
     return (<>
         <div id={"watch-page"}
              ref={watchPageRef}>
@@ -123,13 +129,11 @@ function WatchPage() {
             </div>
             <div id={"anime-info"}
             >
-                <picture>
-                    <source srcSet={animeInfo.cover}/>
-                    <img src={"/default-cover.png"}
-                         alt={"anime cover"}
-                         id={"side-cover"}
-                    />
-                </picture>
+                <img src={coverSource}
+                     alt={"anime cover"}
+                     id={"side-cover"}
+                     onError={coverErrorHandler}
+                />
                 {animeInfo.title}
             </div>
         </div>

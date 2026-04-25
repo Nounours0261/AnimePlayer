@@ -11,6 +11,10 @@
     --black-l2: #404040;
     --black-l1: #2a2a2a;
     --black: #000000;
+
+    --error: #C9000B;
+    --error-l1: #E61F20;
+    --error-l2: #F86161;
 }
 
 body {

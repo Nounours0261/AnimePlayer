@@ -3,18 +3,25 @@ import {getIndex} from "../utils/jsonReader.js";
 import "./HomePage.css";
 import AnimeRow from "./AnimeRow.jsx";
 import {listUpdateEvent} from "./HomeEvents.js";
+import Error from "../app/Error.jsx";
 
 function HomePage() {
     const [animeList, setAnimeList] = useState([]);
     const homePageRef = useRef(null);
     const [seasonal, setSeasonal] = useState([]);
     const [latest, setLatest] = useState([]);
+    const [error, setError] = useState(null);
 
     // load anime index on display
     useEffect(() => {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
+                if (index === null) {
+                    setError(<Error message={"Could not access index contents."}/>);
+                    return;
+                }
+
                 setAnimeList(index.list);
 
                 setLatest(JSON.parse(localStorage.getItem("latest") ?? "[]").map((p) => {
@@ -64,6 +71,7 @@ function HomePage() {
         <div id={"home-page"}
              ref={homePageRef}
         >
+            {error}
             {latest.length !== 0 ? <AnimeRow elements={latest}
                                              oneLine={true}
                                              title={"Latest"}

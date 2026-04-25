@@ -1,0 +1,32 @@
+.home-error {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--black-l2);
+    border-style: dotted;
+    border-width: 5px;
+    border-color: var(--error);
+    padding: 10px;
+
+    .right-side {
+        padding: 0;
+        line-height: 0;
+
+        img {
+            height: 230px;
+            width: auto;
+        }
+    }
+
+    .left-side {
+        padding: 0 10px;
+
+        .error-title {
+            color: var(--error-l1);
+        }
+
+        .error-message {
+
+            color: var(--error-l2);
+        }
+    }
+}

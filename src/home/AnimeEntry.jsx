@@ -8,6 +8,7 @@ function AnimeEntry({info, homePageRef}) {
     const [nextLink, setNextLink] = useState("");
     const seasonalRef = useRef(null);
     const nextEpRef = useRef(null);
+    const [coverSource, setCoverSource] = useState(info.cover);
 
     function infoButtonClick() {
         setDetailed(!detailed);
@@ -57,6 +58,14 @@ function AnimeEntry({info, homePageRef}) {
         }
     }
 
+    function coverErrorHandler() {
+        setCoverSource("/default-cover.png");
+    }
+
+    function closeButtonHandler() {
+        setDetailed(false);
+    }
+
     return (<>
         <div className={`anime-entry ${detailed ? "detailed" : ""}`}
         >
@@ -64,14 +73,12 @@ function AnimeEntry({info, homePageRef}) {
             >
                 <NavLink to={`${nextLink}`}
                 >
-                    <picture>
-                        <source srcSet={info.cover}/>
-                        <img src={"/default-cover.png"}
-                             alt={"anime cover"}
-                             className={"poster"}
-                             loading={"lazy"}
-                        />
-                    </picture>
+                    <img src={coverSource}
+                         alt={"anime cover"}
+                         className={"poster"}
+                         loading={"lazy"}
+                         onError={coverErrorHandler}
+                    />
                 </NavLink>
                 <button className={"info-button"}
                         onClick={infoButtonClick}
@@ -127,9 +134,7 @@ function AnimeEntry({info, homePageRef}) {
                 >
                     <button type={"button"}
                             className={"close-button"}
-                            onClick={() => {
-                                setDetailed(false);
-                            }}
+                            onClick={closeButtonHandler}
                     >
                         Close
                     </button>
