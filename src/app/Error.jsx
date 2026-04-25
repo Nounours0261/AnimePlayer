@@ -1,7 +1,7 @@
 import "./Error.css";
 
-function Error({message}) {
-    return (<div className={"home-error"}
+function Error({message, children}) {
+    return (<div className={"error"}
     >
         <div className={"right-side"}
         >
@@ -9,14 +9,20 @@ function Error({message}) {
         </div>
         <div className={"left-side"}
         >
-            <h1 className={"error-title"}
+            <div>
+                <h1 className={"error-title"}
+                >
+                    An error occured !
+                </h1>
+                <p className={"error-message"}
+                >
+                    {message}
+                </p>
+            </div>
+            <div className={"error-custom"}
             >
-                An error occured !
-            </h1>
-            <p className={"error-message"}
-            >
-                {message}
-            </p>
+                {children}
+            </div>
         </div>
     </div>);
 }

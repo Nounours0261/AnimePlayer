@@ -1,4 +1,4 @@
-.home-error {
+.error {
     display: flex;
     flex-direction: row;
     background-color: var(--black-l2);
@@ -20,14 +20,38 @@
     .left-side {
         padding: 0 10px;
         line-height: normal;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         .error-title {
             color: var(--error-l1);
         }
 
         .error-message {
+            color: var(--error-l3);
+        }
 
-            color: var(--error-l2);
+        .error-custom {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+
+            button {
+                padding: 5px 10px;
+                border: 0;
+                border-radius: 5px;
+                font-size: 1.2rem;
+                cursor: pointer;
+            }
+
+            .dark {
+                background-color: var(--error-l1);
+            }
+
+            .light {
+                background-color: var(--error-l2);
+            }
         }
     }
 }

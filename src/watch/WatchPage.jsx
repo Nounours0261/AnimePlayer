@@ -27,8 +27,34 @@ function WatchPage() {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
+                function goHome() {
+                    navigate("/home");
+                }
+
+                const homeButton = (
+                    <button onClick={goHome}
+                            className={"dark"}
+                    >
+                        Go home
+                    </button>
+                );
+
+                function restart() {
+                    navigate(`/watch/${anime}/1`);
+                }
+
+                const restartButton = (
+                    <button onClick={restart}
+                            className={"light"}
+                    >
+                        Start over
+                    </button>
+                );
+
                 if (index === null) {
-                    setError(<Error message={"Could not access index contents."}/>);
+                    setError(<Error message={"Could not access index contents."}>
+                        {homeButton}
+                    </Error>);
                     return;
                 }
 
@@ -37,7 +63,9 @@ function WatchPage() {
                 });
 
                 if (info === undefined) {
-                    setError(<Error message={`Could not find '${anime}' in the index.`}/>);
+                    setError(<Error message={`Could not find '${anime}' in the index.`}>
+                        {homeButton}
+                    </Error>);
                     return;
                 }
 
@@ -45,23 +73,34 @@ function WatchPage() {
                 setCoverSource(info.cover ?? "/default-cover.png");
 
                 if (isNaN(episodeAsInt)) {
-                    setError(<Error message={`Could not open episode '${episode}' : not a number.`}/>);
+                    setError(<Error message={`Could not open episode '${episode}' : not a number.`}>
+                        {homeButton}
+                        {restartButton}
+                    </Error>);
                     return;
                 }
 
                 if (info.episodes === undefined) {
-                    setError(<Error message={`Anime '${episode}' does not have any episodes.`}/>);
+                    setError(<Error message={`Anime '${episode}' does not have any episodes.`}>
+                        {homeButton}
+                    </Error>);
                     return;
                 }
 
                 if (episodeAsInt > info.episodes.length) {
                     setError(<Error
-                        message={`Could not open episode ${episode} : anime '${info.title}' only has ${info.episodes.length} episodes.`}/>);
+                        message={`Could not open episode ${episode} : anime '${info.title}' only has ${info.episodes.length} episodes.`}>
+                        {homeButton}
+                        {restartButton}
+                    </Error>);
                     return;
                 }
 
                 if (episodeAsInt <= 0) {
-                    setError(<Error message={`Could not open episode ${episode} : episode numbers start at 1.`}/>);
+                    setError(<Error message={`Could not open episode ${episode} : episode numbers start at 1.`}>
+                        {homeButton}
+                        {restartButton}
+                    </Error>);
                     return;
                 }
 
@@ -89,7 +128,7 @@ function WatchPage() {
         return () => {
             ignore = true;
         };
-    }, [anime, episodeAsInt, episode]);
+    }, [anime, episodeAsInt, episode, navigate]);
 
     // keyboard handler for changing episodes
     useEffect(() => {

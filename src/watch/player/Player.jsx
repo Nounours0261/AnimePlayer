@@ -32,17 +32,22 @@ function Player({videoLink, watchPageRef, error}) {
             document.activeElement.blur();
         }
 
-        window.addEventListener("mousemove", moveHandler);
+        const curError = error;
+        if (curError === null) {
+            window.addEventListener("mousemove", moveHandler);
+        }
         window.addEventListener("click", superBlur);
 
         return () => {
-            window.removeEventListener("mousemove", moveHandler);
+            if (curError === null) {
+                window.removeEventListener("mousemove", moveHandler);
+            }
             if (hideMouseTimeout.current !== 0) {
                 clearTimeout(hideMouseTimeout.current);
             }
             window.removeEventListener("click", superBlur);
         };
-    }, []);
+    }, [error]);
 
     // play video when entering the page
     useEffect(() => {
