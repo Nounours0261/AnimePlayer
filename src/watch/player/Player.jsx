@@ -4,7 +4,7 @@ import VideoControls from "./controls/VideoControls.jsx";
 import SubtitleHider from "./SubtitleHider.jsx";
 import {almostFinishedEvent, playNextEvent} from "./playerEvents.js";
 
-function Player({videoLink, watchPageRef}) {
+function Player({videoLink, watchPageRef, error}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
@@ -46,7 +46,7 @@ function Player({videoLink, watchPageRef}) {
 
     // play video when entering the page
     useEffect(() => {
-        if (videoLink !== "" && !document.hidden) {
+        if (videoLink !== null && !document.hidden) {
             videoRef.current.play().catch((reason) => {
                 if (reason.name !== "NotAllowedError") {
                     console.error(reason);
@@ -72,24 +72,28 @@ function Player({videoLink, watchPageRef}) {
         <figure id={"player"}
                 ref={playerRef}
         >
-            <div id={"video-holder"}
-                 ref={videoHolderRef}
-            >
-                <video
-                    src={videoLink}
-                    ref={videoRef}
-                    disableRemotePlayback
-                    onEnded={endedHandler}
-                    onTimeUpdate={timeUpdateHandler}
+            {
+                error
+                ??
+                <div id={"video-holder"}
+                     ref={videoHolderRef}
                 >
-                </video>
+                    <video
+                        src={videoLink}
+                        ref={videoRef}
+                        disableRemotePlayback
+                        onEnded={endedHandler}
+                        onTimeUpdate={timeUpdateHandler}
+                    >
+                    </video>
 
-                <SubtitleHider
-                />
+                    <SubtitleHider
+                    />
 
-                <VideoControls videoRef={videoRef}
-                               playerRef={playerRef}/>
-            </div>
+                    <VideoControls videoRef={videoRef}
+                                   playerRef={playerRef}/>
+                </div>
+            }
         </figure>
     </>);
 }

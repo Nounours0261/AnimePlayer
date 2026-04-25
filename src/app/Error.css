@@ -19,6 +19,7 @@
 
     .left-side {
         padding: 0 10px;
+        line-height: normal;
 
         .error-title {
             color: var(--error-l1);

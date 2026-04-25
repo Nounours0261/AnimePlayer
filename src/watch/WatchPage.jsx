@@ -5,6 +5,7 @@ import EpisodeList from "./EpisodeList.jsx";
 import {getIndex} from "../utils/jsonReader.js";
 import {almostFinishedEvent, playNextEvent, playNumberEvent} from "./player/playerEvents.js";
 import "./WatchPage.css";
+import Error from "../app/Error.jsx";
 
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});
@@ -13,65 +14,95 @@ function WatchPage() {
     const navigate = useNavigate();
     const watchPageRef = useRef(null);
     const [coverSource, setCoverSource] = useState("/default-cover.png");
+    const [error, setError] = useState(null);
+
+    const episodeAsInt = parseInt(episode);
 
     const changeEpisode = useCallback((number) => {
-        if (number > animeInfo.episodes.length) {
-            console.warn(`This anime has less than ${number} episodes`);
-            return;
-        }
-
-        if (number < 1) {
-            console.warn(`Episode numbers start at 1, cannot access episode ${number}`);
-            return;
-        }
-
         navigate(`/watch/${anime}/${number}`);
-    }, [anime, animeInfo.episodes, navigate]);
+    }, [anime, navigate]);
 
     // load data on display
     useEffect(() => {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
+                if (index === null) {
+                    setError(<Error message={"Could not access index contents."}/>);
+                    return;
+                }
+
                 const info = index.list.find((e) => {
                     return e.path === anime;
                 });
+
+                if (info === undefined) {
+                    setError(<Error message={`Could not find '${anime}' in the index.`}/>);
+                    return;
+                }
+
                 setAnimeInfo(info);
-                setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
-                setCoverSource(info.cover);
+                setCoverSource(info.cover ?? "/default-cover.png");
+
+                if (isNaN(episodeAsInt)) {
+                    setError(<Error message={`Could not open episode '${episode}' : not a number.`}/>);
+                    return;
+                }
+
+                if (info.episodes === undefined) {
+                    setError(<Error message={`Anime '${episode}' does not have any episodes.`}/>);
+                    return;
+                }
+
+                if (episodeAsInt > info.episodes.length) {
+                    setError(<Error
+                        message={`Could not open episode ${episode} : anime '${info.title}' only has ${info.episodes.length} episodes.`}/>);
+                    return;
+                }
+
+                if (episodeAsInt <= 0) {
+                    setError(<Error message={`Could not open episode ${episode} : episode numbers start at 1.`}/>);
+                    return;
+                }
+
+                setLink(`/anime/${anime}/${info.episodes[episodeAsInt - 1]}`);
+                setError(null);
+
+                // update anime browser storage
+                // next episode
+                const browserAnimeData = JSON.parse(localStorage.getItem(anime) ?? "{}");
+                browserAnimeData.nextEp = episodeAsInt;
+                localStorage.setItem(anime, JSON.stringify(browserAnimeData));
+
+                // latest anime list
+                const browserLatestData = JSON.parse(localStorage.getItem("latest") ?? "[]");
+                const newList = browserLatestData.filter((p) => {
+                    return p !== anime;
+                });
+                newList.unshift(anime);
+                if (newList.length > 5) {
+                    newList.pop();
+                }
+                localStorage.setItem("latest", JSON.stringify(newList));
             }
         });
         return () => {
             ignore = true;
         };
-    }, [anime, episode]);
-
-    // update anime browser storage
-    useEffect(() => {
-        const browserAnimeData = JSON.parse(localStorage.getItem(anime) ?? "{}");
-        browserAnimeData.nextEp = parseInt(episode);
-        localStorage.setItem(anime, JSON.stringify(browserAnimeData));
-
-        const browserLatestData = JSON.parse(localStorage.getItem("latest") ?? "[]");
-        const newList = browserLatestData.filter((p) => {
-            return p !== anime;
-        });
-        newList.unshift(anime);
-        if (newList.length > 5) {
-            newList.pop();
-        }
-        localStorage.setItem("latest", JSON.stringify(newList));
-
-    }, [anime, episode]);
+    }, [anime, episodeAsInt, episode]);
 
     // keyboard handler for changing episodes
     useEffect(() => {
+        if (isNaN(episodeAsInt)) {
+            return;
+        }
+
         function keyHandler(e) {
             if (e.key === "d") {
-                changeEpisode(parseInt(episode) - 1);
+                changeEpisode(episodeAsInt - 1);
             }
             if (e.key === "g") {
-                changeEpisode(parseInt(episode) + 1);
+                changeEpisode(episodeAsInt + 1);
             }
         }
 
@@ -80,7 +111,7 @@ function WatchPage() {
         return () => {
             window.removeEventListener("keydown", keyHandler);
         };
-    }, [changeEpisode, episode]);
+    }, [changeEpisode, episodeAsInt]);
 
     // event handlers for children
     useEffect(() => {
@@ -125,6 +156,7 @@ function WatchPage() {
             >
                 <Player videoLink={link}
                         watchPageRef={watchPageRef}
+                        error={error}
                 />
             </div>
             <div id={"anime-info"}

@@ -8,7 +8,7 @@ function AnimeEntry({info, homePageRef}) {
     const [nextLink, setNextLink] = useState("");
     const seasonalRef = useRef(null);
     const nextEpRef = useRef(null);
-    const [coverSource, setCoverSource] = useState(info.cover);
+    const [coverSource, setCoverSource] = useState(info.cover ?? "/default-cover.png");
 
     function infoButtonClick() {
         setDetailed(!detailed);
