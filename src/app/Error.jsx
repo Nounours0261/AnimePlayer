@@ -1,11 +1,14 @@
 import "./Error.css";
+import Bear from "../svg/Bear.jsx";
 
 function Error({message, children}) {
     return (<div className={"error"}
     >
         <div className={"right-side"}
         >
-            <img src={"/error-bear.png"} alt={"error icon"}/>
+            <Bear height={230}
+                  type={"error-bear"}
+            />
         </div>
         <div className={"left-side"}
         >

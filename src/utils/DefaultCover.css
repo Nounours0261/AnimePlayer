@@ -1,0 +1,10 @@
+.default-cover {
+    box-sizing: border-box;
+    padding: 5px;
+    aspect-ratio: 230 / 325;
+    background-color: cornflowerblue;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}

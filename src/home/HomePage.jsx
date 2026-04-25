@@ -4,6 +4,7 @@ import "./HomePage.css";
 import AnimeRow from "./AnimeRow.jsx";
 import {listUpdateEvent} from "./HomeEvents.js";
 import Error from "../app/Error.jsx";
+import Bear from "../svg/Bear.jsx";
 
 function HomePage() {
     const [animeList, setAnimeList] = useState([]);

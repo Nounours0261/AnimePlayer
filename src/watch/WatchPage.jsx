@@ -6,6 +6,7 @@ import {getIndex} from "../utils/jsonReader.js";
 import {almostFinishedEvent, playNextEvent, playNumberEvent} from "./player/playerEvents.js";
 import "./WatchPage.css";
 import Error from "../app/Error.jsx";
+import DefaultCover from "../utils/DefaultCover.jsx";
 
 function WatchPage() {
     const [animeInfo, setAnimeInfo] = useState({});
@@ -13,7 +14,7 @@ function WatchPage() {
     const {anime, episode} = useParams();
     const navigate = useNavigate();
     const watchPageRef = useRef(null);
-    const [coverSource, setCoverSource] = useState("/default-cover.png");
+    const [coverSource, setCoverSource] = useState(null);
     const [error, setError] = useState(null);
 
     const episodeAsInt = parseInt(episode);
@@ -70,7 +71,7 @@ function WatchPage() {
                 }
 
                 setAnimeInfo(info);
-                setCoverSource(info.cover ?? "/default-cover.png");
+                setCoverSource(info.cover ?? null);
 
                 if (isNaN(episodeAsInt)) {
                     setError(<Error message={`Could not open episode '${episode}' : not a number.`}>
@@ -182,7 +183,7 @@ function WatchPage() {
     }, [anime, changeEpisode, episode]);
 
     function coverErrorHandler() {
-        setCoverSource("/default-cover.png");
+        setCoverSource(null);
     }
 
     return (<>
@@ -200,11 +201,15 @@ function WatchPage() {
             </div>
             <div id={"anime-info"}
             >
-                <img src={coverSource}
-                     alt={"anime cover"}
-                     id={"side-cover"}
-                     onError={coverErrorHandler}
-                />
+                {
+                    coverSource === null
+                        ? <DefaultCover/>
+                        : <img src={coverSource}
+                               alt={"anime cover"}
+                               id={"side-cover"}
+                               onError={coverErrorHandler}
+                        />
+                }
                 {animeInfo.title}
             </div>
         </div>

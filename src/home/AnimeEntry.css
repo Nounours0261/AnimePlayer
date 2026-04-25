@@ -9,6 +9,8 @@
 
     .left-side {
         position: relative;
+        width: 230px;
+        height: 325px;
 
         .poster {
             width: 230px;

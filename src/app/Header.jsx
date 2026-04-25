@@ -1,5 +1,6 @@
 import "./Header.css";
 import {NavLink} from "react-router";
+import Bear from "../svg/Bear.jsx";
 
 function Header() {
     return (<>
@@ -8,10 +9,8 @@ function Header() {
             <NavLink to={"/home"}
                      id={"home-text"}
             >
-                <img src={"/player-bear.png"}
-                     alt={"Website logo"}
-                     height={50}
-                     width={"auto"}
+                <Bear height={55}
+                      type={"logo-bear"}
                 />
                 <div id={"header-title-holder"}
                 >

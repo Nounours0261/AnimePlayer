@@ -1,0 +1,109 @@
+.screen_out {
+    fill: var(--bear-screen-edge);
+}
+
+.left_hand {
+    fill: var(--bear-fur-left);
+}
+
+.right_hand {
+    fill: var(--bear-fur-right);
+}
+
+.left_foot_back {
+    fill: var(--bear-fur-inside);
+}
+
+.left_foot_front {
+    fill: var(--bear-fur-left);
+}
+
+.right_foot_back {
+    fill: var(--bear-fur-inside);
+}
+
+.right_foot_front {
+    fill: var(--bear-fur-right);
+}
+
+.head_back {
+    fill: var(--bear-fur-left);
+}
+
+.head_shadow {
+    fill: var(--bear-fur-right);
+}
+
+.right_ear_back {
+    fill: var(--bear-fur-inside);
+}
+
+.right_ear_front {
+    fill: var(--bear-fur-right);
+}
+
+.left_ear_back {
+    fill: var(--bear-fur-inside);
+}
+
+.left_ear_front {
+    fill: var(--bear-fur-left);
+}
+
+.left_cheek {
+    fill: var(--bear-cheeks);
+}
+
+.right_cheek {
+    fill: var(--bear-cheeks);
+}
+
+.nose {
+    fill: var(--bear-screen-edge);
+}
+
+.question-bar {
+    stroke: none;
+}
+
+.exclamation-bar {
+    fill: none;
+}
+
+.mark-dot {
+    fill: none;
+}
+
+.logo-bear {
+    .screen_in {
+        fill: var(--bear-screen-default);
+    }
+}
+
+.error-bear {
+    .screen_in {
+        fill: var(--bear-screen-error);
+    }
+
+    .exclamation-bar {
+        fill: black;
+    }
+
+    .mark-dot {
+        fill: black;
+    }
+}
+
+.question-bear {
+    .screen_in {
+        fill: var(--bear-screen-question);
+    }
+
+    .question-bar {
+        stroke: black;
+    }
+
+    .mark-dot {
+        fill: black;
+    }
+}

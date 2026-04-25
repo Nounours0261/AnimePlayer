@@ -2,13 +2,15 @@ import {useEffect, useRef, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
 import {listUpdateEvent} from "./HomeEvents.js";
+import Bear from "../svg/Bear.jsx";
+import DefaultCover from "../utils/DefaultCover.jsx";
 
 function AnimeEntry({info, homePageRef}) {
     const [detailed, setDetailed] = useState(false);
     const [nextLink, setNextLink] = useState("");
     const seasonalRef = useRef(null);
     const nextEpRef = useRef(null);
-    const [coverSource, setCoverSource] = useState(info.cover ?? "/default-cover.png");
+    const [coverSource, setCoverSource] = useState(info.cover ?? null);
 
     function infoButtonClick() {
         setDetailed(!detailed);
@@ -59,7 +61,7 @@ function AnimeEntry({info, homePageRef}) {
     }
 
     function coverErrorHandler() {
-        setCoverSource("/default-cover.png");
+        setCoverSource(null);
     }
 
     function closeButtonHandler() {
@@ -73,12 +75,16 @@ function AnimeEntry({info, homePageRef}) {
             >
                 <NavLink to={`${nextLink}`}
                 >
-                    <img src={coverSource}
-                         alt={"anime cover"}
-                         className={"poster"}
-                         loading={"lazy"}
-                         onError={coverErrorHandler}
-                    />
+                    {
+                        coverSource === null
+                            ? <DefaultCover/>
+                            : <img src={coverSource}
+                                   alt={"anime cover"}
+                                   className={"poster"}
+                                   loading={"lazy"}
+                                   onError={coverErrorHandler}
+                            />
+                    }
                 </NavLink>
                 <button className={"info-button"}
                         onClick={infoButtonClick}

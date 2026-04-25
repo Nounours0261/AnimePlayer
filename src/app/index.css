@@ -16,6 +16,15 @@
     --error-l1: #E61F20;
     --error-l2: #ED3F3E;
     --error-l3: #F86161;
+
+    --bear-fur-left: #D97C41;
+    --bear-fur-right: #df8a57;
+    --bear-fur-inside: #ffeab7;
+    --bear-screen-edge: #787878;
+    --bear-screen-default: #4df3ce;
+    --bear-screen-error: var(--error-l1);
+    --bear-screen-question: #7cfa70;
+    --bear-cheeks: pink;
 }
 
 body {
