@@ -25,7 +25,6 @@ function WatchPage() {
         }
 
         navigate(`/watch/${anime}/${number}`);
-        setLink(`/anime/${anime}/${((animeInfo.episodes ?? [])[number - 1] ?? "")}`);
     }, [anime, animeInfo.episodes, navigate]);
 
     // load data on display
@@ -33,23 +32,19 @@ function WatchPage() {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
-                if (index.ok) {
-                    const info = index.list.find((e) => {
-                        return e.path === anime;
-                    });
-                    setAnimeInfo(info);
-                    setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
-                } else {
-                    window.alert(`Failed to get info about '${anime}', check console for more info`);
-                }
+                const info = index.list.find((e) => {
+                    return e.path === anime;
+                });
+                setAnimeInfo(info);
+                setLink(`/anime/${anime}/${((info.episodes ?? [])[episode - 1] ?? "")}`);
             }
         });
         return () => {
             ignore = true;
         };
-    }, []);
+    }, [anime, episode]);
 
-    // update browser storage
+    // update anime browser storage
     useEffect(() => {
         const browserAnimeData = JSON.parse(localStorage.getItem(anime) ?? "{}");
         browserAnimeData.nextEp = parseInt(episode);
@@ -83,7 +78,7 @@ function WatchPage() {
         return () => {
             window.removeEventListener("keydown", keyHandler);
         };
-    }, [anime, animeInfo, changeEpisode, episode, navigate]);
+    }, [changeEpisode, episode]);
 
     // event handlers for children
     useEffect(() => {

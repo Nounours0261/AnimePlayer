@@ -10,32 +10,28 @@ function HomePage() {
     const [seasonal, setSeasonal] = useState([]);
     const [latest, setLatest] = useState([]);
 
-    // load anime index on creation
+    // load anime index on display
     useEffect(() => {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
-                if (index.ok) {
-                    setAnimeList(index.list);
+                setAnimeList(index.list);
 
-                    setLatest(JSON.parse(localStorage.getItem("latest") ?? "[]").map((p) => {
-                        return index.list.find((e) => {
-                            return e.path === p;
-                        });
-                    }).filter((e) => {
-                        return e !== undefined;
-                    }));
+                setLatest(JSON.parse(localStorage.getItem("latest") ?? "[]").map((p) => {
+                    return index.list.find((e) => {
+                        return e.path === p;
+                    });
+                }).filter((e) => {
+                    return e !== undefined;
+                }));
 
-                    setSeasonal(JSON.parse(localStorage.getItem("seasonal") ?? "[]").map((p) => {
-                        return index.list.find((e) => {
-                            return e.path === p;
-                        });
-                    }).filter((e) => {
-                        return e !== undefined;
-                    }));
-                } else {
-                    window.alert("Failed to get index contents, check console for more info");
-                }
+                setSeasonal(JSON.parse(localStorage.getItem("seasonal") ?? "[]").map((p) => {
+                    return index.list.find((e) => {
+                        return e.path === p;
+                    });
+                }).filter((e) => {
+                    return e !== undefined;
+                }));
             }
         });
         return () => {
