@@ -2,7 +2,6 @@ import {useEffect, useRef, useState} from "react";
 import "./AnimeEntry.css";
 import {NavLink} from "react-router";
 import {listUpdateEvent} from "./HomeEvents.js";
-import Bear from "../svg/Bear.jsx";
 import DefaultCover from "../utils/DefaultCover.jsx";
 
 function AnimeEntry({info, homePageRef}) {
