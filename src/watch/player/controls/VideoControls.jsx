@@ -6,8 +6,9 @@ import "./VideoControls.css";
 import VolumeBar from "./VolumeBar.jsx";
 import SkipRewind from "./SkipRewind.jsx";
 
-function VideoControls({videoRef, playerRef}) {
+function VideoControls({videoRef, playerRef, title}) {
     const controlsRef = useRef(null);
+    const titleRef = useRef(null);
     const hideTimeout = useRef(0);
     const [shown, setShown] = useState(false);
 
@@ -18,7 +19,7 @@ function VideoControls({videoRef, playerRef}) {
             clearTimeout(hideTimeout.current);
         }
 
-        if (!controlsRef.current.matches(":hover")) {
+        if (!controlsRef.current.matches(":hover") && !titleRef.current.matches(":hover")) {
             hideTimeout.current = setTimeout(() => {
                 setShown(false);
                 hideTimeout.current = 0;
@@ -39,6 +40,12 @@ function VideoControls({videoRef, playerRef}) {
     }, []);
 
     return (<>
+        <div id={"video-title"}
+             ref={titleRef}
+             className={shown ? "shown" : "hidden"}
+        >
+            {title}
+        </div>
         <div id="video-controls"
              ref={controlsRef}
              className={shown ? "shown" : "hidden"}

@@ -10,6 +10,8 @@
     #video-holder {
         position: relative;
         width: 100%;
+        container-name: player;
+        container-type: inline-size;
 
         video {
             width: 100%;

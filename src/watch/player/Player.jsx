@@ -4,7 +4,7 @@ import VideoControls from "./controls/VideoControls.jsx";
 import SubtitleHider from "./SubtitleHider.jsx";
 import {almostFinishedEvent, playNextEvent} from "./playerEvents.js";
 
-function Player({videoLink, watchPageRef, error}) {
+function Player({videoLink, watchPageRef, error, title}) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
     const videoHolderRef = useRef(null);
@@ -20,12 +20,10 @@ function Player({videoLink, watchPageRef, error}) {
                 clearTimeout(hideMouseTimeout.current);
             }
 
-            if (videoHolderRef.current.matches(":hover")) {
-                hideMouseTimeout.current = setTimeout(() => {
-                    videoHolderRef.current.style.cursor = "none";
-                    hideMouseTimeout.current = 0;
-                }, 1000);
-            }
+            hideMouseTimeout.current = setTimeout(() => {
+                videoHolderRef.current.style.cursor = "none";
+                hideMouseTimeout.current = 0;
+            }, 1000);
         }
 
         function superBlur() {
@@ -96,7 +94,9 @@ function Player({videoLink, watchPageRef, error}) {
                     />
 
                     <VideoControls videoRef={videoRef}
-                                   playerRef={playerRef}/>
+                                   playerRef={playerRef}
+                                   title={title}
+                    />
                 </div>
             }
         </figure>

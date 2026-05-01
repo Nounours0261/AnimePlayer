@@ -197,6 +197,7 @@ function WatchPage() {
                 <Player videoLink={link}
                         watchPageRef={watchPageRef}
                         error={error}
+                        title={`${animeInfo.title} - ${episodeAsInt}`}
                 />
             </div>
             <div id={"anime-info"}
