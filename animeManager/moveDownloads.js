@@ -100,22 +100,27 @@ export async function moveDownloads() {
         if (!exists) {
             console.log(`Moving new anime '${f}' to public directory !`);
             await fs.mkdir(publicName);
-            const files = await fs.readdir(downloadName);
-            for (const file of files) {
-                await fs.rename(path.join(downloadName, file), path.join(publicName, file));
-            }
-            await fs.rmdir(downloadName);
-            console.log(`Moved all ${files.length} episodes of '${f}' and deleted download directory`);
+        } else {
+            console.log(`Moving new episodes of '${f}' to public directory !`);
         }
 
-        if (exists) {
-            console.log(`Moving new episodes of '${f}' to public directory !`);
-            const files = await fs.readdir(downloadName);
-            for (const file of files) {
+        const files = await fs.readdir(downloadName);
+        for (const file of files) {
+            const sp = file.split(".");
+            if (sp[sp.length - 1] === "mp4") {
                 await fs.rename(path.join(downloadName, file), path.join(publicName, file));
             }
+        }
+
+        const remaining = await fs.readdir(downloadName);
+        if (remaining.length === 0) {
             await fs.rmdir(downloadName);
+        }
+
+        if (!exists) {
             console.log(`Added ${files.length} episodes to '${f}' and deleted download directory`);
+        } else {
+            console.log(`Moved all ${files.length} episodes of '${f}' and deleted download directory`);
         }
     }
 
