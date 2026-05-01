@@ -1,4 +1,4 @@
-import {complementInfo, overWriteInfo} from "./infoHelper.js";
+import {complementInfo} from "./infoHelper.js";
 import path from "path";
 import fs from "node:fs/promises";
 import {argv} from 'node:process';
@@ -8,12 +8,6 @@ import {moveDownloads} from "./moveDownloads.js";
 const animeDirectory = path.join(process.cwd(), "public", "anime");
 
 async function main() {
-    let infoFun = complementInfo;
-    if (argv.includes("-f")) {
-        console.green("force option was used, all data will be recalculated/fetched");
-        infoFun = overWriteInfo;
-    }
-
     if (argv.includes("-u")) {
         console.green("update option was used, downloads will be checked");
         await moveDownloads();
@@ -40,7 +34,7 @@ async function main() {
             const existingData = indexContents.find((e) => {
                 return e.path === file;
             }) ?? {};
-            list.push(await infoFun(fullPath, existingData));
+            list.push(await complementInfo(fullPath, existingData));
         }
     }
 
