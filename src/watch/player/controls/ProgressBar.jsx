@@ -95,7 +95,9 @@ function ProgressBar({videoRef}) {
     }
 
     function timeModeHandler() {
-        setTimeMode(timeMode === "countdown" ? "default" : "countdown");
+        const newValue = timeMode === "countdown" ? "default" : "countdown";
+        setTimeMode(newValue);
+        localStorage.setItem("time-mode", newValue);
     }
 
     return (<>
