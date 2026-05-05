@@ -48,27 +48,40 @@ function Player({videoLink, watchPageRef, error, title}) {
     }, [error]);
 
     // play video when entering the page
+    // event listener for the end of an episode
     useEffect(() => {
+        const curVideo = videoRef.current;
+
         if (videoLink !== null && !document.hidden) {
-            videoRef.current.play().catch((reason) => {
+            curVideo.play().catch((reason) => {
                 if (reason.name !== "NotAllowedError") {
                     console.error(reason);
                 }
             });
         }
-    }, [videoLink]);
+
+        let sent = false;
+
+        function almostFinishedHandler() {
+            if (curVideo.currentTime >= curVideo.duration * 80 / 100) {
+                watchPageRef.current.dispatchEvent(new almostFinishedEvent());
+                sent = true;
+                curVideo.removeEventListener("timeupdate", almostFinishedHandler);
+            }
+        }
+
+        curVideo.addEventListener("timeupdate", almostFinishedHandler);
+
+        return () => {
+            if (!sent) {
+                curVideo.removeEventListener("timeupdate", almostFinishedHandler);
+            }
+        };
+    }, [videoLink, watchPageRef]);
 
     // play next episode when the current one ends
     function endedHandler() {
         watchPageRef.current.dispatchEvent(new playNextEvent());
-    }
-
-    function timeUpdateHandler() {
-        const curVideo = videoRef.current;
-
-        if (curVideo.currentTime >= curVideo.duration * 80 / 100) {
-            watchPageRef.current.dispatchEvent(new almostFinishedEvent());
-        }
     }
 
     return (<>
@@ -86,7 +99,6 @@ function Player({videoLink, watchPageRef, error, title}) {
                         ref={videoRef}
                         disableRemotePlayback
                         onEnded={endedHandler}
-                        onTimeUpdate={timeUpdateHandler}
                     >
                     </video>
 
