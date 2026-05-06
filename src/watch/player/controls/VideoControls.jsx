@@ -29,15 +29,17 @@ function VideoControls({videoRef, playerRef, title}) {
 
     // move event listener for hiding controls
     useEffect(() => {
-        window.addEventListener("mousemove", showControls);
+        const curPlayer = playerRef.current;
+
+        curPlayer.addEventListener("mousemove", showControls);
 
         return () => {
-            window.removeEventListener("mousemove", showControls);
+            curPlayer.removeEventListener("mousemove", showControls);
             if (hideTimeout.current !== 0) {
                 clearTimeout(hideTimeout.current);
             }
         };
-    }, []);
+    }, [playerRef]);
 
     return (<>
         <div id={"video-title"}
