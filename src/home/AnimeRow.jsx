@@ -2,61 +2,32 @@ import AnimeEntry from "./AnimeEntry.jsx";
 import "./AnimeRow.css";
 import {useState} from "react";
 
+
 function AnimeRow({elements, oneLine, title, homePageRef}) {
-    const [filterValue, setFilterValue] = useState("");
+    const [searchValue, setSearchValue] = useState("");
 
     function filterChange(e) {
-        setFilterValue(e.target.value);
+        setSearchValue(e.target.value);
     }
 
     function makeEntryList() {
-        function fuzzySearch(title) {
-            const needle = filterValue.toLowerCase();
-            const haystack = title.toLowerCase();
+        let list = elements;
+        if (searchValue !== "") {
+            list = list.map((e) => {
+                const title = e.title.toLowerCase();
+                const s = searchValue.toLowerCase();
 
-            let distance;
-            let hayIndex;
-
-            if (haystack.charAt(0) === needle.charAt(0)) {
-                hayIndex = 1;
-                distance = 0;
-            } else {
-                hayIndex = 1;
-                while (hayIndex < haystack.length && haystack.charAt(hayIndex) !== needle.charAt(0)) {
-                    hayIndex += 1;
-                }
-                if (hayIndex === haystack.length) {
-                    return -1;
-                }
-
-                if (haystack.charAt(hayIndex - 1) === " ") {
-                    distance = 1;
-                } else {
+                let distance = -1;
+                if (title.includes(s)) {
                     distance = 2;
                 }
-            }
-
-            let needleIndex = 1;
-
-            while (hayIndex < haystack.length) {
-                if (haystack.charAt(hayIndex) === needle.charAt(needleIndex)) {
-                    needleIndex += 1;
-                } else {
-                    distance += 1;
+                if (title.includes(" " + s)) {
+                    distance = 1;
                 }
-                if (needleIndex === needle.length) {
-                    return distance;
+                if (title.startsWith(s)) {
+                    distance = 0;
                 }
-                hayIndex += 1;
-            }
-
-            return -1;
-        }
-
-        let list = elements;
-        if (filterValue !== "") {
-            list = list.map((e) => {
-                return {data: e, distance: fuzzySearch(e.title)};
+                return {data: e, distance};
             }).filter((e) => {
                 return e.distance !== -1;
             }).sort((e, f) => {
@@ -87,7 +58,7 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
                 {oneLine ? null : <input className={"anime-row-search"}
                                          type={"text"}
                                          name={"search"}
-                                         value={filterValue}
+                                         value={searchValue}
                                          onChange={filterChange}
                                          placeholder={"Search"}
                 />}
