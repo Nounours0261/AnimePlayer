@@ -45,7 +45,6 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
                     distance += 1;
                 }
                 if (needleIndex === needle.length) {
-                    console.log(distance, title);
                     return distance;
                 }
                 hayIndex += 1;
