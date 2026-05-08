@@ -21,6 +21,7 @@ function AnimeEntry({info, homePageRef}) {
         const nextEp = browserData.nextEp ?? 1;
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setNextLink(`/watch/${info.path}/${nextEp}`);
+        setCoverSource(info.cover);
         nextEpRef.current.value = nextEp;
 
         const seasonalData = JSON.parse(localStorage.getItem("seasonal") ?? "[]");

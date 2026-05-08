@@ -120,7 +120,7 @@ function WatchPage() {
                     return p !== anime;
                 });
                 newList.unshift(anime);
-                if (newList.length > 5) {
+                if (newList.length > 7) {
                     newList.pop();
                 }
                 localStorage.setItem("latest", JSON.stringify(newList));
