@@ -19,12 +19,12 @@ function VideoControls({videoRef, playerRef, title}) {
             clearTimeout(hideTimeout.current);
         }
 
-        if (!controlsRef.current.matches(":hover") && !titleRef.current.matches(":hover")) {
-            hideTimeout.current = setTimeout(() => {
+        hideTimeout.current = setTimeout(() => {
+            if (!controlsRef.current.matches(":hover") && !titleRef.current.matches(":hover")) {
                 setShown(false);
                 hideTimeout.current = 0;
-            }, 1000);
-        }
+            }
+        }, 1000);
     }
 
     // move event listener for hiding controls
