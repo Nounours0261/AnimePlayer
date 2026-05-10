@@ -7,6 +7,17 @@
     bottom: 6%;
     left: calc((100% - var(--width)) / 2);
     background-color: black;
+    overflow: hidden;
+
+    .hider-star {
+        width: 13%;
+        transform: rotate(45deg);
+        position: absolute;
+
+        * {
+            fill: rgba(255, 255, 255, 0.2);
+        }
+    }
 }
 
 #subtitle-hider.shown {

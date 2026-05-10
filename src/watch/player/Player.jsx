@@ -1,7 +1,7 @@
 import "./Player.css";
 import {useEffect, useRef} from "react";
 import VideoControls from "./controls/VideoControls.jsx";
-import SubtitleHider from "./SubtitleHider.jsx";
+import SubtitleHider from "./SubtitleHider/SubtitleHider.jsx";
 import {almostFinishedEvent, playNextEvent} from "./playerEvents.js";
 
 function Player({videoLink, watchPageRef, error, title}) {
