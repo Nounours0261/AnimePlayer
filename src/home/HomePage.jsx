@@ -11,12 +11,15 @@ function HomePage() {
     const [seasonal, setSeasonal] = useState([]);
     const [latest, setLatest] = useState([]);
     const [error, setError] = useState(null);
+    const [loaded, setLoaded] = useState(false);
 
     // load anime index on display
     useEffect(() => {
         let ignore = false;
         getIndex().then((index) => {
             if (!ignore) {
+                setLoaded(true);
+
                 if (index === null) {
                     setError(<Error message={"Could not access index contents."}/>);
                     return;
@@ -82,11 +85,11 @@ function HomePage() {
                                                title={"Seasonal"}
                                                homePageRef={homePageRef}
             /> : null}
-            <AnimeRow elements={animeList}
-                      oneLine={false}
-                      title={"All"}
-                      homePageRef={homePageRef}
-            />
+            {loaded ? <AnimeRow elements={animeList}
+                                                oneLine={false}
+                                                title={"All"}
+                                                homePageRef={homePageRef}
+            /> : null}
         </div>
     </>);
 }
