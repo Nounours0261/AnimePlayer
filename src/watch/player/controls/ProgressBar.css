@@ -7,24 +7,6 @@
         padding: 8px 4px 7px 8px;
         background-color: rgba(0, 0, 0, 0);
         cursor: pointer;
-
-        div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 20px;
-            background-color: black;
-            border-radius: 5px;
-            padding: 0 5px 1px;
-
-            p {
-                color: var(--highlight);
-                line-height: normal;
-                margin: 0;
-                border: 0;
-                padding: 0;
-            }
-        }
     }
 
     #progress {
@@ -32,6 +14,26 @@
         cursor: pointer;
         padding: 5px 0;
         accent-color: var(--highlight);
+    }
+
+    .time-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        background-color: black;
+        border-radius: 5px;
+        padding: 0 5px 1px;
+        font-size: 0.9rem;
+        font-family: Lexend, sans-serif;
+
+        p {
+            color: var(--highlight);
+            line-height: normal;
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
     }
 }
 

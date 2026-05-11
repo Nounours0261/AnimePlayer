@@ -72,10 +72,10 @@ function ProgressBar({videoRef}) {
         return wrapper();
     }, [videoRef]);
 
-    function formatTime() {
-        let floored = Math.floor(videoProgress);
-        if (timeMode === "countdown") {
-            floored = Math.floor(videoLength) - floored;
+    function formatTime(seconds, total) {
+        let floored = Math.floor(seconds);
+        if (total !== null) {
+            floored = Math.floor(total) - floored;
         }
         const totalMins = Math.floor(floored / 60);
 
@@ -86,7 +86,7 @@ function ProgressBar({videoRef}) {
         const secString = `${secs < 10 ? "0" : ""}${secs}`;
         const minString = `${mins < 10 ? "0" : ""}${mins}`;
         const hourString = hours > 0 ? `${hours}:` : "";
-        return `${timeMode === "countdown" ? "-" : ""}${hourString}${minString}:${secString}`;
+        return `${total !== null ? "-" : ""}${hourString}${minString}:${secString}`;
     }
 
     function barHandler(e) {
@@ -108,8 +108,9 @@ function ProgressBar({videoRef}) {
                     onClick={timeModeHandler}
                     title={"Swap display"}
             >
-                <div>
-                    <p>{formatTime()}</p>
+                <div className={"time-display"}
+                >
+                    <p>{formatTime(videoProgress, timeMode === "countdown" ? videoLength : null)}</p>
                 </div>
             </button>
             <input id={"progress"}
@@ -120,6 +121,9 @@ function ProgressBar({videoRef}) {
                    ref={progressRef}
                    onInput={barHandler}
             />
+            <div className={"time-display"}>
+                <p>{formatTime(videoLength, null)}</p>
+            </div>
         </div>
     </>);
 }
