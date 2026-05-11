@@ -1,6 +1,7 @@
 import AnimeEntry from "./AnimeEntry.jsx";
 import "./AnimeRow.css";
 import {useState} from "react";
+import Error from "../app/Error.jsx";
 
 
 function AnimeRow({elements, oneLine, title, homePageRef}) {
@@ -35,6 +36,10 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
             }).map((e) => {
                 return e.data;
             });
+        }
+
+        if (list.length === 0) {
+            return (<Error message={`No anime was found${searchValue === "" ? "." : ` for search '${searchValue}'.`}`}/>)
         }
 
         return list.map((anime, index) => {
