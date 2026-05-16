@@ -52,6 +52,18 @@ function WatchPage() {
                     </button>
                 );
 
+                function backToLast() {
+                    navigate(`/watch/${anime}/${info.episodes.length}`);
+                }
+
+                const lastButton = (
+                    <button onClick={backToLast}
+                            className={"dark"}
+                    >
+                        Back to last episode
+                    </button>
+                );
+
                 if (index === null) {
                     setError(<Error message={"Could not access index contents."}>
                         {homeButton}
@@ -77,6 +89,7 @@ function WatchPage() {
                     setError(<Error message={`Could not open episode '${episode}' : not a number.`}>
                         {homeButton}
                         {restartButton}
+                        {lastButton}
                     </Error>);
                     return;
                 }
@@ -93,6 +106,7 @@ function WatchPage() {
                         message={`Could not open episode ${episode} : anime '${info.title}' only has ${info.episodes.length} episodes.`}>
                         {homeButton}
                         {restartButton}
+                        {lastButton}
                     </Error>);
                     return;
                 }
@@ -101,6 +115,7 @@ function WatchPage() {
                     setError(<Error message={`Could not open episode ${episode} : episode numbers start at 1.`}>
                         {homeButton}
                         {restartButton}
+                        {lastButton}
                     </Error>);
                     return;
                 }
