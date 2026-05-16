@@ -202,6 +202,7 @@ function WatchPage() {
     }
 
     return (<>
+        <title>{`AniPlayer · ${animeInfo.title}`}</title>
         <div id={"watch-page"}
              ref={watchPageRef}>
             <EpisodeList count={(animeInfo.episodes ?? []).length}

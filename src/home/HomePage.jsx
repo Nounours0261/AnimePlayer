@@ -71,6 +71,7 @@ function HomePage() {
     }, [animeList]);
 
     return (<>
+        <title>AniPlayer · Home</title>
         <div id={"home-page"}
              ref={homePageRef}
         >
