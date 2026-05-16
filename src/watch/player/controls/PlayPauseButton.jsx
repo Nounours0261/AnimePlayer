@@ -20,7 +20,6 @@ function PlayPauseButton({videoRef}) {
         function keyHandler(event) {
             if (event.key === " ") {
                 event.preventDefault();
-                event.stopPropagation();
                 playPause();
             }
         }

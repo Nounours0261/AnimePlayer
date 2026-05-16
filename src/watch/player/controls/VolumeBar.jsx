@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import "./VolumeBar.css";
 
 function VolumeBar({videoRef}) {
@@ -57,17 +57,32 @@ function VolumeBar({videoRef}) {
         changeVideoVolume(e.target.value);
     }
 
-    function muteHandler() {
+    const swapMute = useCallback(()=> {
         videoRef.current.muted = !muted;
         setMuted(!muted);
         localStorage.setItem("muted", `${!muted}`);
-    }
+    }, [muted, videoRef])
+
+    // Keyboard listener for muting the video
+    useEffect(() => {
+        function keyHandler(event) {
+            if (event.key === "m") {
+                event.preventDefault();
+                swapMute();
+            }
+        }
+        window.addEventListener("keydown", keyHandler);
+
+        return () => {
+            window.removeEventListener("keydown", keyHandler);
+        };
+    }, [swapMute]);
 
     return (<div id={"volume-holder"}
                  className={"bar"}
         >
             <button id={"mute-button"}
-                    onClick={muteHandler}
+                    onClick={swapMute}
                     title={"Mute"}
             >
                 <svg id={"volume-icon"}

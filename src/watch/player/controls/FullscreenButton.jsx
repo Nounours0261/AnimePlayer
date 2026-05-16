@@ -20,7 +20,6 @@ function FullscreenButton({playerRef}) {
         function keyHandler(event) {
             if (event.key === "f") {
                 event.preventDefault();
-                event.stopPropagation();
                 swapFullscreen();
             }
         }
