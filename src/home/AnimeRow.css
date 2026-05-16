@@ -11,6 +11,7 @@
         border-style: dotted;
         border-width: 5px;
         border-color: var(--highlight-d1);
+        cursor: pointer;
     }
 
     .anime-row-content {

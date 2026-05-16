@@ -51,12 +51,13 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
     }
 
     return (<>
-        <div className={`anime-row ${oneLine ? "one-line" : ""}`}
+        <details className={`anime-row ${oneLine ? "one-line" : ""}`}
+                 open
         >
-            <div className={"anime-row-title"}
+            <summary className={"anime-row-title"}
             >
                 {title}
-            </div>
+            </summary>
 
             <div className={"anime-row-content"}>
 
@@ -73,7 +74,7 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
                     {makeEntryList()}
                 </div>
             </div>
-        </div>
+        </details>
     </>);
 }
 
