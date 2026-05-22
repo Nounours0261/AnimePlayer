@@ -4,6 +4,15 @@
     height: calc(100vh - 85px);
     gap: 3%;
 
+    #list-holder {
+        width: 15%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-shrink: 0;
+        scrollbar-color: var(--highlight-d1) var(--black);
+        scrollbar-gutter: stable;
+    }
+
     #player-holder {
         display: flex;
         flex-direction: column;
@@ -23,7 +32,6 @@
         justify-content: center;
         gap: 10px;
         width: 15%;
-        max-width: 200px;
 
         padding: 0 0 0 15px;
         color: var(--highlight-l2);

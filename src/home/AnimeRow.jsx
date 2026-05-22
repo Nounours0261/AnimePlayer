@@ -39,7 +39,8 @@ function AnimeRow({elements, oneLine, title, homePageRef}) {
         }
 
         if (list.length === 0) {
-            return (<Error message={`No anime was found${searchValue === "" ? "." : ` for search '${searchValue}'.`}`}/>)
+            return (
+                <Error message={`No anime was found${searchValue === "" ? "." : ` for search '${searchValue}'.`}`}/>);
         }
 
         return list.map((anime, index) => {

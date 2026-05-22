@@ -57,11 +57,11 @@ function VolumeBar({videoRef}) {
         changeVideoVolume(e.target.value);
     }
 
-    const swapMute = useCallback(()=> {
+    const swapMute = useCallback(() => {
         videoRef.current.muted = !muted;
         setMuted(!muted);
         localStorage.setItem("muted", `${!muted}`);
-    }, [muted, videoRef])
+    }, [muted, videoRef]);
 
     // Keyboard listener for muting the video
     useEffect(() => {
@@ -71,6 +71,7 @@ function VolumeBar({videoRef}) {
                 swapMute();
             }
         }
+
         window.addEventListener("keydown", keyHandler);
 
         return () => {

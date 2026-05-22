@@ -87,9 +87,9 @@ function HomePage() {
                                                homePageRef={homePageRef}
             /> : null}
             {loaded ? <AnimeRow elements={animeList}
-                                                oneLine={false}
-                                                title={"All"}
-                                                homePageRef={homePageRef}
+                                oneLine={false}
+                                title={"All"}
+                                homePageRef={homePageRef}
             /> : null}
         </div>
     </>);

@@ -1,14 +1,7 @@
 .episode-list {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    flex-shrink: 0;
-    scrollbar-color: var(--highlight-d1) var(--black);
-    scrollbar-gutter: stable;
     gap: 5px;
-    width: 15%;
-    max-width: 200px;
 
     .list-entry {
         flex-grow: 1;
