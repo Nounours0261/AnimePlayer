@@ -5,42 +5,37 @@ import {useEffect, useRef} from "react";
 
 function EpisodeList({count, watchPageRef}) {
     const {episode} = useParams();
-    const scrollToRef = useRef(null);
     const episodeAsInt = parseInt(episode);
 
-    useEffect(() => {
-        if (scrollToRef.current != null) {
-            scrollToRef.current.scrollIntoView();
-        }
-    }, [count, watchPageRef]);
+    function EpisodeButton({epNumber}) {
+        const scrollToRef = useRef(null);
 
-    function EpisodeButton(i, scrollTo = false) {
+        useEffect(() => {
+            if (scrollToRef.current != null) {
+                scrollToRef.current.scrollIntoView({behavior: "smooth"});
+            }
+        }, [epNumber]);
+
         function clickHandler() {
-            watchPageRef.current.dispatchEvent(new playNumberEvent(i));
+            watchPageRef.current.dispatchEvent(new playNumberEvent(epNumber));
         }
 
         return (<>
-            <button className={"list-entry" + (i === episodeAsInt ? " selected" : "")}
+            <button className={"list-entry" + (epNumber === episodeAsInt ? " selected" : "")}
                     onClick={clickHandler}
-                    key={i}
-                    ref={scrollTo ? scrollToRef : null}
+                    key={epNumber}
+                    ref={epNumber === episodeAsInt - 2 ? scrollToRef : null}
             >
-                Episode {i}
+                Episode {epNumber}
             </button>
         </>);
     }
 
-    const allEpisodes = [...Array(count).keys()];
-
     return (<>
         <div className={`episode-list ${count > 6 ? "tall" : "short"}`}
         >
-            {allEpisodes.slice(0, episodeAsInt - 3).map((i) => {
-                return EpisodeButton(i + 1);
-            })}
-            {episodeAsInt - 2 > 0 && episodeAsInt - 2 <= count ? EpisodeButton(episodeAsInt - 2, true) : null}
-            {allEpisodes.slice(episodeAsInt - 2).map((i) => {
-                return EpisodeButton(i + 1);
+            {[...Array(count).keys()].map((i) => {
+                return <EpisodeButton epNumber={i + 1}/>;
             })}
         </div>
     </>);
