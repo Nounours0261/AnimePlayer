@@ -16,6 +16,7 @@ function WatchPage() {
     const watchPageRef = useRef(null);
     const [coverSource, setCoverSource] = useState(null);
     const [error, setError] = useState(null);
+    const [isTheater, setIsTheater] = useState(false);
 
     const episodeAsInt = parseInt(episode);
 
@@ -146,7 +147,7 @@ function WatchPage() {
         };
     }, [anime, episodeAsInt, episode, navigate]);
 
-    // keyboard handler for changing episodes
+    // keyboard handler for changing episodes and theater mode
     useEffect(() => {
         if (isNaN(episodeAsInt)) {
             return;
@@ -159,6 +160,9 @@ function WatchPage() {
             if (e.key === "g") {
                 changeEpisode(episodeAsInt + 1);
             }
+            if (e.key === "t") {
+                setIsTheater(!isTheater);
+            }
         }
 
         window.addEventListener("keydown", keyHandler);
@@ -166,7 +170,7 @@ function WatchPage() {
         return () => {
             window.removeEventListener("keydown", keyHandler);
         };
-    }, [changeEpisode, episodeAsInt]);
+    }, [changeEpisode, episodeAsInt, isTheater]);
 
     // event handlers for children
     useEffect(() => {
@@ -204,7 +208,9 @@ function WatchPage() {
     return (<>
         <title>{`AniPlayer · ${animeInfo.title}`}</title>
         <div id={"watch-page"}
-             ref={watchPageRef}>
+             className={isTheater ? "theater" : ""}
+             ref={watchPageRef}
+        >
             <div id={"list-holder"}>
                 <EpisodeList count={(animeInfo.episodes ?? []).length}
                              watchPageRef={watchPageRef}

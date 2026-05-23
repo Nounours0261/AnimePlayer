@@ -12,6 +12,7 @@
         flex-shrink: 0;
         scrollbar-color: var(--highlight-d1) var(--black);
         scrollbar-gutter: stable;
+        display: flex;
     }
 
     #player-holder {
@@ -47,5 +48,15 @@
         #side-cover {
             width: 100%;
         }
+    }
+}
+
+#watch-page.theater {
+    #list-holder {
+        display: none;
+    }
+
+    #anime-info {
+        display: none;
     }
 }
