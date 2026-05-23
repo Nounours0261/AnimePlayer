@@ -118,9 +118,9 @@ export async function moveDownloads() {
         }
 
         if (!exists) {
-            console.log(`Added ${files.length} episodes to '${f}' and deleted download directory`);
-        } else {
             console.log(`Moved all ${files.length} episodes of '${f}' and deleted download directory`);
+        } else {
+            console.log(`Added ${files.length} episodes to '${f}' and deleted download directory`);
         }
     }
 
