@@ -99,8 +99,7 @@ function Player({videoLink, watchPageRef, error, title}) {
                         ref={videoRef}
                         disableRemotePlayback
                         onEnded={endedHandler}
-                    >
-                    </video>
+                    />
 
                     <SubtitleHider
                     />
@@ -108,6 +107,7 @@ function Player({videoLink, watchPageRef, error, title}) {
                     <VideoControls videoRef={videoRef}
                                    playerRef={playerRef}
                                    title={title}
+                                   videoLink={videoLink}
                     />
                 </div>
             }

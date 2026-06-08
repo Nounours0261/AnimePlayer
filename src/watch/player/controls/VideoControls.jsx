@@ -6,9 +6,11 @@ import "./VideoControls.css";
 import VolumeBar from "./VolumeBar.jsx";
 import SkipRewind from "./SkipRewind.jsx";
 
-function VideoControls({videoRef, playerRef, title}) {
+function VideoControls({videoRef, playerRef, title, videoLink}) {
     const controlsRef = useRef(null);
     const titleRef = useRef(null);
+    const [titleShown, setTitleShown] = useState(false);
+    const hideTitleTimeout = useRef(0);
     const hideTimeout = useRef(0);
     const [shown, setShown] = useState(false);
 
@@ -41,10 +43,29 @@ function VideoControls({videoRef, playerRef, title}) {
         };
     }, [playerRef]);
 
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setTitleShown(true);
+
+        if (hideTitleTimeout.current !== 0) {
+            clearTimeout(hideTitleTimeout.current);
+        }
+
+        hideTitleTimeout.current = setTimeout(() => {
+            setTitleShown(false);
+            hideTitleTimeout.current = 0;
+        }, 2000);
+
+        return () => {
+            hideTitleTimeout.current = 0;
+            setTitleShown(false);
+        }
+    }, [setTitleShown, videoLink]);
+
     return (<>
         <div id={"video-title"}
              ref={titleRef}
-             className={shown ? "shown" : "hidden"}
+             className={shown || titleShown ? "shown" : "hidden"}
         >
             {title}
         </div>
