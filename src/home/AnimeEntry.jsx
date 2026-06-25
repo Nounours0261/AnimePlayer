@@ -35,7 +35,7 @@ function AnimeEntry({info, homePageRef}) {
 
         const nextEpInt = parseInt(formData.get("nextEp"));
 
-        if (!isNaN(nextEpInt) && nextEpInt >= 1 && nextEpInt <= info.episodes.length) {
+        if (!isNaN(nextEpInt)) {
             const newData = {};
             newData.nextEp = nextEpInt;
             localStorage.setItem(info.path, JSON.stringify(newData));
