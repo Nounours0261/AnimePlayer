@@ -84,7 +84,7 @@ function WatchPage() {
                 }
 
                 setAnimeInfo(info);
-                setCoverSource(info.cover ?? null);
+                setCoverSource(info.cover ? `/anime/${info.path}/${info.cover}` : null);
 
                 if (isNaN(episodeAsInt)) {
                     setError(<Error message={`Could not open episode '${episode}' : not a number.`}>

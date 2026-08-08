@@ -1,13 +1,25 @@
-import {complementInfo} from "./infoHelper.js";
+import {complementInfo, forceCover} from "./infoHelper.js";
 import path from "path";
 import fs from "node:fs/promises";
 import {argv} from 'node:process';
 import "./consoleHelpers.js";
 import {moveDownloads} from "./moveDownloads.js";
 
-const animeDirectory = path.join(process.cwd(), "public", "anime");
+export const animeDirectory = path.join(process.cwd(), "public", "anime");
 
 async function main() {
+    if (argv.includes("-c")) {
+        if (argv.length !== 5) {
+            console.red("Cover option requires 3 arguments");
+            console.log("node main.js -c [anime_path] [cover_url]");
+            return;
+        }
+
+        console.green(`Setting cover for ${argv[3]}`);
+        await forceCover(argv[3], argv[4])
+        return;
+    }
+
     if (argv.includes("-u")) {
         console.green("update option was used, downloads will be checked");
         await moveDownloads();
@@ -37,6 +49,10 @@ async function main() {
             list.push(await complementInfo(fullPath, existingData));
         }
     }
+
+    list.filter((a) => {
+        return a !== null;
+    });
 
     await fs.writeFile(indexPath, JSON.stringify({list}, null, 2));
 }

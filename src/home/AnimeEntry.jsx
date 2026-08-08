@@ -9,7 +9,7 @@ function AnimeEntry({info, homePageRef}) {
     const [nextLink, setNextLink] = useState("");
     const seasonalRef = useRef(null);
     const nextEpRef = useRef(null);
-    const [coverSource, setCoverSource] = useState(info.cover ?? null);
+    const [coverSource, setCoverSource] = useState(null);
 
     function infoButtonClick() {
         setDetailed(!detailed);
@@ -21,7 +21,7 @@ function AnimeEntry({info, homePageRef}) {
         const nextEp = browserData.nextEp ?? 1;
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setNextLink(`/watch/${info.path}/${nextEp}`);
-        setCoverSource(info.cover);
+        setCoverSource(info.cover ? `/anime/${info.path}/${info.cover}` : null);
         nextEpRef.current.value = nextEp;
 
         const seasonalData = JSON.parse(localStorage.getItem("seasonal") ?? "[]");

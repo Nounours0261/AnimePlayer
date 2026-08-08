@@ -4,7 +4,7 @@ export async function getCoverUrl(title) {
 query ($title: String) {
   Media (search: $title, type: ANIME, sort: SEARCH_MATCH) { 
     coverImage {
-        large
+        extraLarge
     }
   }
 }
@@ -27,7 +27,7 @@ query ($title: String) {
     if (res.ok) {
         try {
             const json = await res.json();
-            return json.data.Media.coverImage.large;
+            return json.data.Media.coverImage.extraLarge;
         } catch (e) {
             console.error(`Ran into error '${e}' while fetching cover for '${title}'`);
             return null;
