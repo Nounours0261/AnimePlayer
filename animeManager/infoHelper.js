@@ -25,7 +25,7 @@ async function getInfo(directory, getCover = false) {
     const title = baseName.replaceAll("_", " ");
     let cover = null;
     if (getCover) {
-        cover = await getCoverUrl(title);
+        cover = await getCoverUrl(baseName, title);
         if (cover !== null)  {
             const split = cover.split(".");
             const coverPath = `cover.${split[split.length - 1]}`;
