@@ -1,7 +1,5 @@
 // fetch cover URL from AniList with error handling and 429 checking
 export async function getCoverUrl(baseName, title) {
-    console.log(baseName, title)
-
     const query = `
 query ($title: String) {
   Media (search: $title, type: ANIME, sort: SEARCH_MATCH) { 
